@@ -25,7 +25,7 @@ after_script:
  
 branches:
   only:
-    - blog-source
+    - blog_source
 env:
  global:
-   - GitHubREF: github.com/freereaper/freereaper.github.io.git</code>
+   - GitHubREF: github.com/freereaper/freereaper.github.io.git
