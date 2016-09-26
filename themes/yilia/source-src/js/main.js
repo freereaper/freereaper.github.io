@@ -13,7 +13,7 @@ $(function() {
 	archiveInner.init()
 	fixPage.init()
 	tags.init()
-	if(browser.versions.mobile === true || $(window).width() < 700){
+	if(browser.versions.mobile === true || $(window).width() < 800){
 		mobile.init()
 	}else{
 		tools.init()
