@@ -15,3 +15,29 @@ Hello, Reaper
 ----
 
 fsafdafd
+
+```c
+
+int main()
+{
+	if (x > 2)
+		return false;
+}
+
+```
+
+```python
+import os
+
+def func():
+	pass
+
+```
+
+```bash
+
+git clone ...
+awk fdsdd "sdfds"
+```
+
+![img](/assets/BlogImg/test.jpg)
