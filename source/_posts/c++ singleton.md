@@ -1,6 +1,7 @@
 ---
 layout: post
 title: C++ Singleton Design Pattern
+date: 2015-08-02
 comments: true
 tags: [c++, design pattern]
 ---

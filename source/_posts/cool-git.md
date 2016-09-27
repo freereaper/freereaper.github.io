@@ -1,5 +1,6 @@
 ---
 title: cool git
+date: 2015-08-10
 layout: post
 comments: true
 tags: [git, shell]
