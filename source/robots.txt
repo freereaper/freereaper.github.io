@@ -1,0 +1,2 @@
+Sitemap: http://www.freereaper.com/sitemap.xml
+Sitemap: http://www.freereaper.com/baidusitemap.xml
