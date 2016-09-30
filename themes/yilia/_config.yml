@@ -37,7 +37,7 @@ open_in_new: false
 
 # Miscellaneous
 google_analytics: ''
-favicon: /favicon.ico
+favicon: favicon.png
 
 #你的头像url
 avatar: /assets/BlogImg/reaper.png
