@@ -9,6 +9,8 @@ tags: [git, shell]
 ![img](/assets/BlogImg/git.png)
 很早之前就开始使用并接触Git，这种分布式的SCM给我的*coding*带来了不少便捷.
 
+<!-- more -->
+
 ## Git学习
 
 可以在线学习[ProGit](http://git-scm.com/book/en/v2)对Git有比较深入的了解。
@@ -27,8 +29,6 @@ git commit --amend -sv
 + git commit --amend -v
     * --amend 新提交覆盖上一次提交
     * -v verbose，列出跟上一提交之间的改变
-
-<!-- more -->
 
 ### git diff
 
