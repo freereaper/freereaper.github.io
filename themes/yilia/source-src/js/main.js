@@ -7,13 +7,15 @@ var browser = require('./browser')
 var fixPage = require('./fix-page')
 var mobile = require('./mobile')
 var viewer = require('./viewer')
+require('./jquery.lazyload')
 
 $(function() {
 	viewer.init()
 	archiveInner.init()
 	fixPage.init()
 	tags.init()
-	if(browser.versions.mobile === true || $(window).width() < 800){
+	// todo: resize destrop
+	if(browser.versions.mobile === true && $(window).width() < 800){
 		mobile.init()
 	}else{
 		tools.init()
@@ -24,5 +26,9 @@ $(function() {
 		$('.left-col,.mid-col').click(function() {
 			tools.hide()
 		})
+	}
+
+	if (yiliaConfig && yiliaConfig.open_in_new) {
+		$('.article-entry a').not('.article-more-a').attr('target', '_blank')
 	}
 })
