@@ -7,7 +7,7 @@ title: freereaper
 subtitle: 心若不动，风又奈何
 description:
 author: Ming Li
-language:
+language: zh-CN
 timezone:
 
 # URL
@@ -45,12 +45,20 @@ highlight:
   enable: true
   line_number: true
   auto_detect: false
-  tab_replace:
+  tab_replace: ''
 
 # Category & Tag
 default_category: uncategorized
 category_map:
 tag_map:
+
+# Archives
+## 2: Enable pagination
+## 1: Disable pagination
+## 0: Fully Disable
+archive: 1
+category: 1
+tag: 1
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
@@ -61,7 +69,7 @@ time_format: HH:mm:ss
 
 # Pagination
 ## Set per_page to 0 to disable pagination
-per_page: 5
+per_page: 6
 pagination_dir: page
 
 # Extensions
