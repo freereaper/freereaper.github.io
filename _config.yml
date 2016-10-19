@@ -4,17 +4,18 @@
 
 # Site
 title: freereaper
-subtitle: 心若不动，风又奈何
-description:
-author: Ming Li
-language: zh-CN
+subtitle: xinyoumenghu,xixiuxiangwei
+description: keep studying
+author: reaper
+language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://www.freereaper.com
 root: /
-permalink: :year/:month/:day/:title/
+#permalink: :year/:month/:day/:title/
+permalink: :year/:title/
 permalink_defaults:
 
 # Directory
@@ -75,7 +76,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: yilia
+theme: next
 
 sitemap:
   path: sitemap.xml

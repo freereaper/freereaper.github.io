@@ -35,7 +35,7 @@ animate: true
 open_in_new: false
 
 # Miscellaneous
-favicon: favicon.png
+favicon: favicon.ico
 
 #你的头像url
 avatar: /assets/BlogImg/reaper.png
