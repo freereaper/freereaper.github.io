@@ -6,7 +6,7 @@
     "version": "3.2.2"
   },
   "dependencies": {
-    "hexo": "^3.2.0",
+    "hexo": "^3.2.2",
     "hexo-deployer-git": "^0.2.0",
     "hexo-generator-archive": "^0.1.4",
     "hexo-generator-baidu-sitemap": "^0.1.2",
@@ -15,6 +15,7 @@
     "hexo-generator-index": "^0.2.0",
     "hexo-generator-sitemap": "^1.1.2",
     "hexo-generator-tag": "^0.2.0",
+    "hexo-github-card": "^1.0.0",
     "hexo-renderer-ejs": "^0.2.0",
     "hexo-renderer-marked": "^0.2.10",
     "hexo-renderer-stylus": "^0.3.1",

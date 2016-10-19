@@ -114,7 +114,7 @@ font:
   codes:
     external: true
     family: PT Mono
-    size: 12
+    size:
 
 
 
