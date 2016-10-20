@@ -54,9 +54,9 @@ menu_icons:
   commonweal: heartbeat
 
 
-reward_comment: enjoy
-wechatpay: /assets/BlogImg/reaper.png
-alipay: /assets/BlogImg/reaper.png
+reward_comment: 您的赞赏将支持作者继续原创分享！
+wechatpay: /assets/BlogImg/wxpay.png
+alipay: /assets/BlogImg/alipay.png
 
 
 
@@ -130,6 +130,7 @@ font:
 social:
   #LinkLabel: Link
   GitHub: https://github.com/freereaper
+  Weibo: http://weibo.com/embeddedworld
 
 # Social Links Icons
 # Icon Mapping:
@@ -142,7 +143,7 @@ social_icons:
   # KeyMapsToSocalItemKey: NameOfTheIconFromFontAwesome
   GitHub: github
   Twitter: twitter
-  Weibo: weibo
+  Weibo: Weibo
 
 
 # Sidebar Avatar
@@ -183,12 +184,11 @@ sidebar:
 
 
 # Blogrolls
-links_title: Friendly Links
+links_title: 友情链接
 links_layout: block
 #links_layout: inline
 links:
-  Title: http://example.com/
-  Title1: http://example.com/
+  zhaoxin: https://portal.zhaoxin.com/Login.jsp
 
 
 # ---------------------------------------------------------------
