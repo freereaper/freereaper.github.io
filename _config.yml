@@ -83,6 +83,10 @@ sitemap:
 baidusitemap:
   path: baidusitemap.xml
 
+marked:
+  gfm: true
+  breaks: false
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
