@@ -30,7 +30,8 @@ env:
     - CodingREF: git@git.coding.net:reaper/reaper.git
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_7875c8e68637_key -iv $encrypted_7875c8e68637_iv -in .travis/zx_reaper.enc -out ~/.ssh/zx_reaper -d
-  - chmod 600 ~/.ssh/zx_reaper
+  - openssl aes-256-cbc -K $encrypted_7875c8e68637_key -iv $encrypted_7875c8e68637_iv -in .travis/zx_reaper.enc -out ~/.ssh/id_rsa -d
+  - chmod 600 ~/.ssh/id_rsa
   - eval $(ssh-agent)
+  - ssh-add ~/.ssh/id_rsa
   - cp .travis/ssh_config ~/.ssh/config
