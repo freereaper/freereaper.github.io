@@ -1,37 +1,31 @@
 language: node_js
 node_js: stable
-
-# S: Build Lifecycle
 install:
-  - npm install hexo-cli -g
-  - npm install hexo --save
-  - npm install
-
+- npm install hexo-cli -g
+- npm install hexo --save
+- npm install
 script:
-  - hexo g
-
+- hexo g
 after_script:
-  - cd ./public
-  - git init
-  - git config user.name "freereaper"
-  - git config user.email "freereaper@aliyun.com"
-  - git add .
-  - git commit -m "Travis CI Auto Builder"
-  - git push --force --quiet "https://${GitHubKEY}@${GitHubREF}" master:master
-  - git push --force --quiet "${CodingREF}" master:master
-
+- cd ./public
+- git init
+- git config user.name "freereaper"
+- git config user.email "freereaper@aliyun.com"
+- git add .
+- git commit -m "Travis CI Auto Builder"
+- git push --force --quiet "https://${GitHubKEY}@${GitHubREF}" master:master
+- git push --force --quiet "${CodingREF}" master:master
 branches:
   only:
   - blog_source
-
 env:
   global:
-    - GitHubREF: github.com/freereaper/freereaper.github.io.git
-    - CodingREF: git@git.coding.net:reaper/reaper.git
-
+  - GitHubREF: github.com/freereaper/freereaper.github.io.git
+  - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:
-  - openssl aes-256-cbc -K $encrypted_7875c8e68637_key -iv $encrypted_7875c8e68637_iv -in .travis/zx_reaper.enc -out ~/.ssh/id_rsa -d
-  - chmod 600 ~/.ssh/id_rsa
-  - eval $(ssh-agent)
-  - ssh-add ~/.ssh/id_rsa
-  - cp .travis/ssh_config ~/.ssh/config
+- openssl aes-256-cbc -K $encrypted_ac8a79341c08_key -iv $encrypted_ac8a79341c08_iv
+  -in .travis/zx_reaper.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- eval $(ssh-agent)
+- ssh-add ~/.ssh/id_rsa
+- cp .travis/ssh_config ~/.ssh/config

@@ -1,5 +1,5 @@
 Host git.coding.net
   User git
   StrictHostKeyChecking no
-  IdentityFile ~/.ssh/zx_reaper
+  IdentityFile ~/.ssh/id_rsa
   IdentitiesOnly yes
