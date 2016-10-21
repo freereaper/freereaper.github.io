@@ -2,7 +2,6 @@ language: node_js
 node_js: stable
 install:
 - npm install hexo-cli -g
-- npm install hexo --save
 - npm install
 script:
 - hexo g
