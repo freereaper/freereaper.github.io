@@ -53,8 +53,10 @@ menu_icons:
   archives: archive
   commonweal: heartbeat
 
-
-reward_comment: 您的赞赏将支持作者继续原创分享！
+# ---------------------------------------------------------------
+# reward Settings
+# ---------------------------------------------------------------
+reward_comment: 欣赏此文？求鼓励，求支持！
 wechatpay: /assets/BlogImg/wxpay.png
 alipay: /assets/BlogImg/alipay.png
 
@@ -69,6 +71,14 @@ alipay: /assets/BlogImg/alipay.png
 #scheme: Mist
 scheme: Pisces
 
+# ---------------------------------------------------------------
+# Search Settings
+# ---------------------------------------------------------------
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
 
 # ---------------------------------------------------------------
 # Font Settings
