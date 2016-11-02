@@ -1,10 +1,12 @@
 ---
 layout: post
-title: compress
+title: compress and downscaler
 date: 2016-10-26
 comments: false
 tags: [zx]
 ---
+
+# Compress
 
 1. 有损压缩(lossy)
   > 压缩的时候如果不能压到fail boundary以内，则强制压缩，保证burst length在fail boundary以内。
@@ -34,3 +36,20 @@ compress scaler test:
 ```bash
 cmode -scl 0 -p 42 22 -o 190 50 -s 100 100 -w 191 200 -pe 300 300 -oe 250 100 -se 101 91 -we 200 150 -t 2
 ```
+
+# DownScaler
+
+DIU downscaler register group:
+`mm327c`: 
+> Bit[21] --- DST_FORMAT(output data format), control the output of downscaler csc.
+
+`mm3280`:
+> Bit[7-8] --- SCALING_MODE（downscaler work mode)
+
+`mm3278`:
+> Bit[5-31] --- BASE_ADDR
+
+`mm8264`:  down scaling write back control register
+> Bit[1-3] --- csc data in format
+> Bit[4-6] --- csc data output format
+
