@@ -15,7 +15,7 @@ tags: [python, shell, pyenv]
 
 ## 安装pyenv和pyenv-virtualenv
  
-```shell
+```sh
 function bootstrap-pyenv {
     __clone 'https://github.com/yyuu/pyenv.git' '.pyenv'
     if [ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ]; then
@@ -29,7 +29,7 @@ function bootstrap-pyenv {
 <!-- more -->
 
 添加`pyenv init`和`pyenv virtualenv-init`到.zshrc中：
-```shell
+```sh
 # file : .zshrc
 # pyenv cfg
 export PYENV_ROOT="${HOME}/.pyenv"
@@ -50,7 +50,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 ### 安装和卸载python
 
-``` shell
+``` sh
 #查看可以安装的python版本
 pyenv install --list
 
@@ -73,13 +73,13 @@ pyenv uninstall 3.5.1
 可选安装方法：
 * 直接下载对应的版本压缩包,例如Python-3.5.1.tgz，拷贝至`~/.pyenv/cache/`中，
 如果没有cache目录，则手动创建，并修改文件名为Python-3.5.1.tar.gz。
-```shell
+```sh
 mv Python-3.5.1.tgz Python-3.5.1.tar.gz
 pyenv install 3.5.1 -v
 ```
 
 * 使用国内镜像的pyenv源安装。
-```shell
+```sh
 export PYTHON_BUILD_MIRROR_URL="http://pyenv.qiniudn.com/pythons/"
 pyenv install 3.5.1 -v
 ```
@@ -91,13 +91,13 @@ pyenv install 3.5.1 -v
 当系统安装了多个python版本，为了保持系统环境足够干净，可以使用`pyenv virtualenv`来创建虚拟python环境。
 
 创建一个以python3.5.1为解释器的虚拟环境可以通过以下命令实现:
-```shell
+```sh
 pyenv virtualenv 3.5.1 env351
 ```
 此时会在`~/.pyenv/versions/`目录下创建一个env351的目录，通过`pyenv versions`即可看到当前创建的虚拟环境。
 
 为项目单独配置一个虚拟的python运行环境：
-```shell
+```sh
 #创建名为project的虚拟环境
 pyenv virtualenv 3.5.1 project
 
@@ -112,7 +112,7 @@ pip install ...
 
 
 卸载创建成功的虚拟环境：
-```shell
+```sh
 pyenv uninstall env351
 ```
 
