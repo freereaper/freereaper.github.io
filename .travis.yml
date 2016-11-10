@@ -13,7 +13,7 @@ after_script:
 - git add .
 - git commit -m "Travis CI Auto Builder"
 - git push --force --quiet "https://${GitHubKEY}@${GitHubREF}" master:master
-- git push --force --quiet "${CodingREF}" master:coding-pages
+- git push --force --quiet "${CodingREF}" master:master
 branches:
   only:
   - blog_source
