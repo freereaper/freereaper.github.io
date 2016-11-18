@@ -14,16 +14,8 @@ tags: [python, metaclass]
 <a id="newstyle">听说你是这里对新技术最了解的 Web 开发工程师？</a>
 
 上一篇文章中已经讲述了什么是`metaclass`，那么<span id="inline-purple">metaclass</span>具体运用在哪些使用场景，通常有
-* test
-* test2
-
-
-
-
-dafdafd
-
-- test
-- test2
+- https://zhuanlan.zhihu.com/p/21379984
+- http://www.tuicool.com/articles/N7fYNr
 
 ```python
 class MetaClass(type):
