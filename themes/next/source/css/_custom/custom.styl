@@ -20,10 +20,10 @@
 }
 
 code {
-    color: #c7254e;
-    background: #f9f2f4;
+    color: #fff;
+    background: #333;
     margin: 2px;
-    border: 1px solid #d6d6d6;
+    border: 1px solid #333;
 }
 
 .highlight, pre {
@@ -33,7 +33,228 @@ code {
     border-radius: 3px;
 }
 
-// li ����ʵ��Բ
+// li 符号实心圆
 .posts-expand .post-body ul li {
     list-style: disc;
+}
+
+/ Custom styles.
+//修改不在文章内的链接文本样式
+.link-blue{
+	color: #f36;
+	&:hover {
+		color: #f00;
+	}
+}
+
+// 下载样式
+a#newstyle {
+	display: inline-block;
+	padding: 0 10px;
+	color: #9B30FF;
+	background: transparent;
+	border: 2px solid #000;
+	border-radius: 2px;
+	transition: all .5s ease;
+	font-weight: bold;
+	&:hover {
+		background: #000;
+		color: #fff;
+	}
+}
+// 颜色块-黄
+span#inline-yellow {
+	display:inline;
+	padding:.2em .6em .3em;
+	font-size:80%;
+	font-weight:bold;
+	line-height:1;
+	color:#fff;
+	text-align:center;
+	white-space:nowrap;
+	vertical-align:baseline;
+	border-radius:0;
+	background-color: #f0ad4e;
+}
+// 颜色块-绿
+span#inline-green {
+	display:inline;
+	padding:.2em .6em .3em;
+	font-size:80%;
+	font-weight:bold;
+	line-height:1;
+	color:#fff;
+	text-align:center;
+	white-space:nowrap;
+	vertical-align:baseline;
+	border-radius:0;
+	background-color: #5cb85c;
+}
+// 颜色块-蓝
+span#inline-blue {
+	display:inline;
+	padding:.2em .6em .3em;
+	font-size:80%;
+	font-weight:bold;
+	line-height:1;
+	color:#fff;
+	text-align:center;
+	white-space:nowrap;
+	vertical-align:baseline;
+	border-radius:0;
+	background-color: #2780e3;
+}
+// 颜色块-紫
+span#inline-purple {
+	display:inline;
+	padding:.2em .6em .3em;
+	font-size:80%;
+	font-weight:bold;
+	line-height:1;
+	color:#fff;
+	text-align:center;
+	white-space:nowrap;
+	vertical-align:baseline;
+	border-radius:0;
+	background-color: #9954bb;
+}
+// 左侧边框红色块级
+p#div-border-left-red {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-left-width: 5px;
+	border-radius: 3px;
+	border-left-color: #df3e3e;
+}
+// 左侧边框黄色块级
+p#div-border-left-yellow {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-left-width: 5px;
+	border-radius: 3px;
+	border-left-color: #f0ad4e;
+}
+// 左侧边框绿色块级
+p#div-border-left-green {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-left-width: 5px;
+	border-radius: 3px;
+	border-left-color: #5cb85c;
+}
+// 左侧边框蓝色块级
+p#div-border-left-blue {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-left-width: 5px;
+	border-radius: 3px;
+	border-left-color: #2780e3;
+}
+// 左侧边框紫色块级
+p#div-border-left-purple {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-left-width: 5px;
+	border-radius: 3px;
+	border-left-color: #9954bb;
+}
+// 右侧边框红色块级
+p#div-border-right-red {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-right-width: 5px;
+	border-radius: 3px;
+	border-right-color: #df3e3e;
+}
+// 右侧边框黄色块级
+p#div-border-right-yellow {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-right-width: 5px;
+	border-radius: 3px;
+	border-right-color: #f0ad4e;
+}
+// 右侧边框绿色块级
+p#div-border-right-green {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-right-width: 5px;
+	border-radius: 3px;
+	border-right-color: #5cb85c;
+}
+// 右侧边框蓝色块级
+p#div-border-right-blue {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-right-width: 5px;
+	border-radius: 3px;
+	border-right-color: #2780e3;
+}
+// 右侧边框紫色块级
+p#div-border-right-purple {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-right-width: 5px;
+	border-radius: 3px;
+	border-right-color: #9954bb;
+}
+// 上侧边框红色
+p#div-border-top-red {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-top-width: 5px;
+	border-radius: 3px;
+	border-top-color: #df3e3e;
+}
+// 上侧边框黄色
+p#div-border-top-yellow {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-top-width: 5px;
+	border-radius: 3px;
+	border-top-color: #f0ad4e;
+}
+// 上侧边框绿色
+p#div-border-top-green {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-top-width: 5px;
+	border-radius: 3px;
+	border-top-color: #5cb85c;
+}
+// 上侧边框蓝色
+p#div-border-top-blue {
+	display: block;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-top-width: 5px;
+	border-radius: 3px;
+	border-top-color: #2780e3;
 }
