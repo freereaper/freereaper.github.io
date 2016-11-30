@@ -9,7 +9,8 @@ tags: [python, metaclass]
 <p id="div-border-top-blue">上一篇文章中已经讲述了什么是metaclass，metaclass类似创建类的模板，继承自type类，
 通过重写<span id="inline-green">\_\_new\_\_</span>方法控制类的创建行为。</p>
 
-## metacalss原理
+
+### metacalss原理
 
 ```python
 class MetaClass(type):
@@ -27,12 +28,22 @@ class MetaClass(type):
         print attrs
         return super(MetaClass, cls).__init__(name, bases, attrs)
 		
-calss MyClass(object):
+class MyClass(object):
     __metaclass__ = MetaClass
 	
     def fun(self, param):
         print param
 
+'''
+Allocating memory for class MyClass
+<class '__main__.MetaClass'>
+(<type 'object'>,)
+{'fun': <function fun at 0x02E19BB0>, '__module__': '__main__', '__metaclass__': <class '__main__.MetaClass'>}
+initializing class MyClass
+<class '__main__.MyClass'>
+(<type 'object'>,)
+{'fun': <function fun at 0x02E19BB0>, '__module__': '__main__', '__metaclass__': <class '__main__.MetaClass'>}
+'''
 ```
 
 - cls: 将要创建的类。
@@ -44,7 +55,7 @@ calss MyClass(object):
 要通过`MetaClass`来创建，而不再使用内置的`type`。这样在`MetaClass.__new__()`方法中即可对类的定义进行修改，比如加上新的方法或者
 属性。
 
-## metaclass使用
+### metaclass使用
 
 在采用`__metaclass__`创建类的时候，默认的查找顺序如下（摘自官方文档）：
 > If dict['__metaclass__'] exists, it is used.
@@ -52,8 +63,9 @@ calss MyClass(object):
 > Otherwise, if a global variable named __metaclass__ exists, it is used.
 > Otherwise, the old-style, classic metaclass (types.ClassType) is used.
 
+#### 委托
 <span id="inline-blue">委托(delegate)</span>是设计模式中常用的一种方法，通常利用委托类为需要委托的方法
-去定义一个方法。
+去定义一个方法，以下是摘自网上的例子：
 ```python
 class ImmutableList(object):  
     def __init__(self, delegate):  
@@ -72,7 +84,7 @@ class ImmutableList(object):
         return self.delegate.index(v)  
 ```
 
-上面的实现显得非常的枯燥，使用元类的实现就显得格外简单和优雅，如下所示：
+以上是比较常规的做法，而使用元类的实现就显得格外简单和优雅：
 ```python
 class DelegateMetaClass(type):  
     def __new__(cls, name, bases, attrs):  
@@ -99,5 +111,82 @@ class ImmutableList(Delegate):
 class ImmutableDict(Delegate):  
     delegated_methods = ('__contains__', '__getitem__', '__eq__', '__len__', '__str__',   
             'get', 'has_key', 'items', 'iteritems', 'iterkeys', 'itervalues', 'keys', 'values')  
+
+```
+
+#### 接口
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Field(object):
+    def __init__(self, fname, ftype):
+        self.fname = fname
+        self.ftype = ftype
+    def __str__(self):
+        return '{%s: (%s, %s)}' % (self.__class__.__name__, self.fname, self.ftype)   
+    
+class StringField(Field):
+    def __init__(self, fname):
+        super(StringField, self).__init__(fname, 'varchar(100)')
+
+class IntegerField(Field):
+    def __init__(self, fname):
+        super(IntegerField, self).__init__(fname, 'bigint')
+    
+class ModelMetaclass(type):
+    def __new__(cls, name, bases, attrs):
+        print cls
+        print "creating for:", name
+        if name == "Model":
+            attrs['author'] = "reaper"
+            return super(ModelMetaclass, cls).__new__(cls, name, bases, attrs)
+        else:
+            mapping = {}
+            print "Create Model for:", name
+            for k, v in attrs.items():
+                if isinstance(v, Field):
+                    print "mapping %s with %s" %(k, v)
+                    mapping[k] = v
+            attrs['_table'] = name 
+            attrs['_mapping'] = mapping 
+            return type.__new__(cls, name, bases, attrs)
+
+    
+class Model(dict):
+    __metaclass__ = ModelMetaclass
+    
+    def __init__(self, **kwargs):
+        for key in kwargs.keys():
+            if key not in self.__class__._mapping.keys():
+                print "Key '%s' is not defined for %s" %(key, self.__class__.__name__)
+                return 
+
+        super(Model, self).__init__(**kwargs)
+        
+    def save(self):
+        fields = []
+        params = []
+        args = []
+        for k, v in self.__class__._mapping.items():
+            fields.append(k)
+            params.append("'{0}'".format(self[k]))
+        sql = 'insert into %s (%s) values (%s)' % (self.__class__._table, ','.join(fields), ','.join(params))
+        print 'SQL: %s' %sql 
+
+class Student(Model):
+    id = IntegerField('id_c')
+    name = StringField('username_c')
+    email = StringField('email_c')
+
+print Student.author
+
+print "-------------------------------------------------"
+print Student._table
+print Student._mapping
+print "-------------------------------------------------"
+s1 = Student(id = 1, name = "Wilber", email = "wilber@sh.com")
+print s1.id
+s1.save()
 
 ```
