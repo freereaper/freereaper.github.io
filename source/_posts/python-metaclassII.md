@@ -46,6 +46,8 @@ initializing class MyClass
 '''
 ```
 
+<!-- more -->
+
 - cls: 将要创建的类。
 - name: 类的名字，也就是通常使用__name__获取的属性。
 - bases: 基类。
