@@ -5,8 +5,8 @@
 # Site
 title: freereaper
 subtitle: code & fit
-description: 少吃点@@! <br />  非专业程序猿
-author: 李明
+description: Eat Less.@@! <br />  None-Professional Geeker.
+author: Ming Li
 language: zh-Hans
 timezone:
 
@@ -15,7 +15,7 @@ timezone:
 url: http://www.freereaper.com
 root: /
 #permalink: :year/:month/:day/:title/
-permalink: :year/:title/
+permalink: blog/:year-:month-:day-:title.html
 permalink_defaults:
 
 # Directory
