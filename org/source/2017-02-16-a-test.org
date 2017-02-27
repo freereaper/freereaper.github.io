@@ -1,6 +1,6 @@
 #+TITLE: a test
 #+DATE: 2017-02-16
-#+SETUPFILE: /home/reaper/freereaper.com/org/setupfile.org
+#+SETUPFILE: ~/freereaper.com/org/setupfile.org
 #+JEKYLL_LAYOUT: post
 #+JEKYLL_CATEGORIES: freereaper
 #+JEKYLL_TAGS: freereaper QO

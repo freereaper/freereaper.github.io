@@ -29,7 +29,7 @@ canonical: true
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   home: /
-  #categories: /categories
+  categories: /categories
   about: /about
   archives: /archives
   tags: /tags
@@ -56,7 +56,7 @@ menu_icons:
 # ---------------------------------------------------------------
 # reward Settings
 # ---------------------------------------------------------------
-reward_comment: 欣赏此文？求鼓励，求支持！
+reward_comment: 赏钱买辣条可好？
 wechatpay: /assets/BlogImg/wxpay.png
 alipay: /assets/BlogImg/alipay.png
 

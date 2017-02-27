@@ -1,0 +1,18 @@
+#+TITLE:书●生活●空间
+#+DATE: 2017-02-25
+#+SETUPFILE: ~/freereaper.com/org/setupfile.org
+#+JEKYLL_LAYOUT: post
+#+JEKYLL_CATEGORIES: 随笔
+#+JEKYLL_TAGS: 随笔 心情
+#+JEKYLL_PUBLISHED: true
+
+
+#+BEGIN_EXPORT html
+{% cq %}
+物外，有时候是一张情感的沙发。当城市拒绝你的时候，这里总有灯光柔软与宽容。
+{% endcq %}
+#+END_EXPORT
+
+{{{more}}}
+[[http://localhost:4000/assets/BlogImg/wuwai.png]]
+心在热闹的地方待久了，也想能有个地方能稍作歇息。毕业一年了，
