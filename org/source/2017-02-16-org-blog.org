@@ -1,4 +1,4 @@
-#+TITLE: org-blog
+#+TITLE: 从markdow到org的迁移
 #+DATE: 2017-02-16
 #+SETUPFILE: ~/freereaper.com/org/setupfile.org
 #+JEKYLL_LAYOUT: post
@@ -6,13 +6,42 @@
 #+JEKYLL_TAGS:
 #+JEKYLL_PUBLISHED: true
 
-*   this is a test
 
-=cccc=
-
-ooooaaaa
-
+这是一篇来自org+hexo的测试文章，依然采用travis进行持续集成，部署到github和coding.net。
 
 {{{more}}}
 
-Test for org mode.
+#+BEGIN_EXPORT html
+<p id="div-border-top-blue"> 作为vim党，依然还是中了emacs的毒！</p>
+#+END_EXPORT
+
+** 行内代码
+   ~sudo apt-get install ruby~
+
+** 代码块
+
+   #+BEGIN_SRC C
+     #include <stdio.h>
+     int main(char argc, char **argv)
+     {
+         printf("freereaper.com\n");
+         return 1;
+     }
+   #+END_SRC
+
+** 表格
+   | version | status |
+   |---------+--------|
+   |       1 | ok     |
+
+** 引用
+   #+BEGIN_QUOTE
+   www.freereaper.com
+   #+END_QUOTE
+
+** 列表
+   - vim
+   - emacs
+
+** 文字处理
+  +stroke line+

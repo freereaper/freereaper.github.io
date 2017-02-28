@@ -7,14 +7,20 @@ tags: [python, metaclass]
 ---
 
 ### Build Vim8 From Source
+----------------------
 
 * 卸载旧版本的vim
-```bash
+
+``` sh
 sudo apt-get remove vim vim-runtime gvim
 sudo apt-get remove vim-tiny vim-common vim-gui-common vim-nox
 ```
+
+<!-- more -->
+
 * 安装依赖包
-```bash
+
+``` sh
 sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
     libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
@@ -22,14 +28,14 @@ sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
     libperl-dev git
 ```
 * 编译vim8.0
-```bash
-#设置代理
+
+``` sh
 git config --global http.proxy "socks5://127.0.0.1:1080"
 git config --global https.proxy "socks5://127.0.0.1:1080"
 cd ~/download
 git clone https://github.com/vim/vim.git vim
 cd vim
-# 其中python-config dir可以通过pytho-config --configdir查看
+
 ./configure --with-compiledby="freereaper" \
             --with-features=huge \
             --enable-multibyte \
@@ -46,18 +52,23 @@ cd vim
 make VIMRUNTIMEDIR=/usr/share/vim/vim80
 sudo make install
 ```
+其中python-config dir可以通过pytho-config --configdir查看
 
-###编译YCM
+### 编译YCM
+-----------------------------
 通过plug工具安装YouCompleteMe插件，建议走代理。
-```bash
+
+``` sh
 git config --global http.proxy "socks5://127.0.0.1:1080"
 git config --global https.proxy "socks5://127.0.0.1:1080"
 ```
+
 下载Pre_Buillt Clang Binaries，按照以下步骤编译ycm_core.so
-```bash
+
+``` sh
 wget http://llvm.org/releases/3.9.0/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz -O clang+llvm.tar.xz
 xz -d clang+llvm.tar.xz
-tar -xvf clang+llvm.tar.xz -C ~/ycm_temp/
+tar -xvf clang+llvm.tar -C ~/ycm_temp/
 mkdir -p ~/ycm_build
 cd ~/ycm_build
 cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=~/ycm_temp/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04 . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp

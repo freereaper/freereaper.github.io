@@ -10,6 +10,8 @@ tags: [python, metaclass]
 通过重写<span id="inline-green">\_\_new\_\_</span>方法控制类的创建行为。</p>
 
 
+<!-- more -->
+
 ### metacalss原理
 
 ```python
@@ -45,8 +47,6 @@ initializing class MyClass
 {'fun': <function fun at 0x02E19BB0>, '__module__': '__main__', '__metaclass__': <class '__main__.MetaClass'>}
 '''
 ```
-
-<!-- more -->
 
 - cls: 将要创建的类。
 - name: 类的名字，也就是通常使用__name__获取的属性。
