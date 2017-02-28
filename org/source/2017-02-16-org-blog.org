@@ -12,7 +12,7 @@
 {{{more}}}
 
 #+BEGIN_EXPORT html
-<p id="div-border-top-blue"> 作为vim党，依然还是中了emacs的毒！</p>
+<p id="div-border-left-purple"> 作为vim党，依然还是中了emacs的毒，大爱<span id="inline-yellow">org mode</span> ~~!</p>
 #+END_EXPORT
 
 ** 行内代码
@@ -24,15 +24,20 @@
      #include <stdio.h>
      int main(char argc, char **argv)
      {
-         printf("freereaper.com\n");
+         printf("www.freereaper.com\n");
          return 1;
      }
    #+END_SRC
 
 ** 表格
-   | version | status |
-   |---------+--------|
-   |       1 | ok     |
+
+  |----+-------|
+  |  1 | one   |
+  |  2 | two   |
+  |  3 | Three |
+  |  4 | four  |
+  |----+-------|
+
 
 ** 引用
    #+BEGIN_QUOTE
