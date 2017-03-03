@@ -12,7 +12,7 @@
 {{{more}}}
 
 #+BEGIN_EXPORT html
-<p id="div-border-left-purple"> 作为vim党，依然还是中了emacs的毒，大爱<span id="inline-yellow">org mode</span> ~~!</p>
+<p id="div-border-left-purple"> 作为vim党，依然还是中了emacs的毒，<span id="inline-yellow">org mode</span>确实很好用有没有 ~~!</p>
 #+END_EXPORT
 
 ** 行内代码
