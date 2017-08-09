@@ -16,7 +16,7 @@ after_script:
 - git config user.email "freereaper@aliyun.com"
 - git add .
 - git commit -m "Travis CI Auto Builder"
-- git push --force --quiet "https://${GitHubKEY}@${GitHubREF}" master:master
+- git push --force --quiet "https://${GH_TOKEN}@${GitHubREF}" master:master
 - git push --force --quiet "${CodingREF}" master:master
 branches:
   only:

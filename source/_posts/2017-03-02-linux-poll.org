@@ -1,0 +1,335 @@
+#+TITLE: linux poll分析
+#+DATE: 2017-03-02
+#+SETUPFILE: ../../org/setupfile.org
+#+LAYOUT: post
+#+CATEGORIES: Linux
+#+TAGS: Kernel Driver
+
+在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 ~poll~ ，与之相对应的即为 ~sys_poll~ 函数。
+
+* sys_poll
+
+sys_poll函数的实现在内核中的 [[http://lxr.free-electrons.com/source/fs/select.c#L971][fs/select.c]] 文件中:
+#+BEGIN_SRC C
+  SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds,
+                  int, timeout_msecs)
+  {
+      ...
+
+      /* 在这里调用do_sys_poll */
+      ret = do_sys_poll(ufds, nfds, to);
+
+      ...
+  }
+#+END_SRC
+
+{{{more}}}
+
+
+可以看看 ~SYSCALL_DEFINE3~ 是如何展开得到 ~sys_poll~ 函数的定义的
+
+#+BEGIN_SRC C
+  #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
+
+  #define __SYSCALL_DEFINEx(x, name, ...)                             \
+      asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))       \
+          __attribute__((alias(__stringify(SyS##name))));             \
+      static inline long SYSC##name(__MAP(x,__SC_DECL,__VA_ARGS__));	\
+      asmlinkage long SyS##name(__MAP(x,__SC_LONG,__VA_ARGS__));      \
+      asmlinkage long SyS##name(__MAP(x,__SC_LONG,__VA_ARGS__))       \
+      {                                                               \
+          long ret = SYSC##name(__MAP(x,__SC_CAST,__VA_ARGS__));      \
+          __MAP(x,__SC_TEST,__VA_ARGS__);                             \
+          __PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));           \
+          return ret;                                                 \
+      }                                                               \
+      static inline long SYSC##name(__MAP(x,__SC_DECL,__VA_ARGS__))
+#+END_SRC
+
+~SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs)~ 通过宏展开后:
+
+#+BEGIN_SRC C
+  /* 给sys_poll起的别名为Sys_poll */
+  asmlinkage long sys_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))
+      __attribute__((alias(__stringify(SyS_poll))));
+  static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));
+
+  /* Sys_poll函数将参数类型强转为long类型 */
+  asmlinkage SyS_poll(__MAP(3, __SC_LONG, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));
+  asmlinkage SyS_poll(__MAP(3, __SC_LONG, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))
+  {
+
+      /* 将参数类型强转为对应的实际类型，并调用下面实现的SYSC_poll函数 */
+      long ret = SYSC_poll(__MAP(3, __SC_CAST, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));
+      __MAP(3, __SC_TEST, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs);
+      __PROTECT(3, ret, __MAP(3, __SC_ARGS, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));
+      return ret;
+  }
+  static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))
+#+END_SRC
+
+#+BEGIN_EXPORT html
+那么<span id="inline-yellow">__MAP</span>  <span id="inline-purple">__SC_CAST</span>  <span id="inline-blue">__SC_DECL</span> 以及 <span id="inline-green">__SC_LONG</span>
+这些宏又是如何实现的：
+#+END_EXPORT
+
+
+#+BEGIN_SRC C
+  #define __MAP(n,...) __MAP##n(__VA_ARGS__)
+
+  #define __MAP1(m,t,a) m(t,a)
+  #define __MAP2(m,t,a,...) m(t,a), __MAP1(m,__VA_ARGS__)
+  #define __MAP3(m,t,a,...) m(t,a), __MAP2(m,__VA_ARGS__)
+
+  #define __SC_DECL(t, a)	t a
+
+  /********************************************************************************************************************/
+  /* 对于__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs)                    */
+  /* 展开后即为 __SC_DECL(struct pollfd __user *, ufds), __MAP2(__SC_DECL, unsigned int, nfds, int, timeout_msecs)    */
+  /* 进一步展开 __SC_DECL(struct pollfd __user *, ufds), __SC_DECL(unsigned int, nfds), __SC_DECL(int, timeout_msecs) */
+  /* 最终即为 struct pollfd __user * ufds, unsigned int nfds, int timeout_msecs                                       */
+  /********************************************************************************************************************/
+
+#+END_SRC
+
+可见__MAP和__SC_DECL宏的主要作用是进行参数类型和参数的配对，而当和__SC_LONG配对使用时就是将所有的参数类型强转为long类型进行接受，
+这样转来转去为了啥？原因就是64位linux系统下有个名为CVE-2009-2009的漏洞，ABI规定在64位平台的在系统调用时，必须确保用户空间将系统
+调用中32位的参数存放在64位的寄存器中并保证正确的符合扩展，但是用户空间程序并不能保证做到这点，这就有可能向有漏洞的系统调用传送特制
+参数导致系统崩溃或者权限提升。
+
+#+BEGIN_QUOTE
+ABI: Application Binary Interface, 定义了的内容大概有：
+1. 数据类型的大小，布局和对齐方式。
+2. 控制函数的参数如何进行传递以及如何接受返回值，例如，通过栈还是部分通过寄存器等。
+3. 应用如何使用系统调用。
+4. 目标文件的二进制格式，程序库等。
+#+END_QUOTE
+
+* do_sys_poll
+讲了这么多，才刚分析完sys_poll是如何定义的，sys_poll会调用do_sys_poll，接下来看do_sys_poll函数做了哪些事情:
+
+- 将用户传入的pollfd数组拷贝到内核空间。
+- 遍历查询传入的pollfd数组中文件描述符对应设备的状态，如果所有设备都没有关心的事件发生，这时则需要挂起当前进程，直到有事件到来或者超时将其唤醒。如果有事件到来，则再次遍历所有设备，定位事件。
+- 将获得的事件返回到用户空间，并释放分配的内存以及移除等待队列。
+
+
+#+BEGIN_SRC C
+  int do_sys_poll(struct pollfd __user *ufds, unsigned int nfds,
+                  struct timespec *end_time)
+  {
+      /* 1.执行拷贝动作 */
+      ...
+
+      /*2. 遍历查询 */
+      poll_initwait(&table);
+      fdcount = do_poll(nfds, head, &table, end_time)；
+
+      /*3. 移除等待队列，释放内存，将事件拷贝回用户空间 */
+      poll_freewait(&table);
+      ...
+  }
+
+#+END_SRC
+
+
+
+** 拷贝
+
+在进行拷贝时，先申请一段栈空间，转换为poll_list类型，剩余的空间则被用来存放pollfd数组，在查询的文件描述符较少时，由于变量是存放在栈空间，
+这样速度可以更快，而且可以节省memory。在文件描述符超过所申请的栈空间时，再额外的分配所需空间，完成剩下的拷贝工作。
+#+BEGIN_SRC C
+  long stack_pps[POLL_STACK_ALLOC/sizeof(long)];
+  struct poll_list *const head = (struct poll_list *)stack_pps;
+  struct poll_list *walk = head;
+  unsigned long todo = nfds;
+
+  for (;;) {
+      walk->next = NULL;
+      walk->len = len;
+      if (!len)
+          break;
+
+      /* 拷贝pollfd数组到poll_list中的entries成员中 */
+      if (copy_from_user(walk->entries, ufds + nfds-todo,
+                          sizeof(struct pollfd) * walk->len))
+          goto out_fds;
+
+      /* todo初始值为要拷贝的文件描述符个数 */
+      todo -= walk->len;
+      if (!todo)
+          break;
+
+      len = min(todo, POLLFD_PER_PAGE);
+      /* 当要查询的文件描述符大于预先在栈中申请的空间时，申请分配内存 */
+      size = sizeof(struct poll_list) + sizeof(struct pollfd) * len;
+      walk = walk->next = kmalloc(size, GFP_KERNEL);
+      if (!walk) {
+          err = -ENOMEM;
+          goto out_fds;
+      }
+  }
+
+#+END_SRC
+
+
+** 查询事件
+
+*** poll_initwait
+
+初始化poll_wqueues变量table。
+#+BEGIN_SRC C
+  poll_initwait(struct poll_wqueues *pwq)
+  {
+      /* 将poll_table中的_qproc函数变量初始化为__pollwait，_key设置为(~0UL) */
+      init_poll_funcptr(&pwq->pt, __pollwait);
+      pwq->polling_task = current;
+      pwq->triggered = 0;
+      pwq->error = 0;
+      pwq->table = NULL;
+      pwq->inline_index = 0;
+  }
+#+END_SRC
+
+__pollwait函数在驱动中的poll实现中通过poll_wait函数调用，这里先看下它的实现：
+
+#+BEGIN_SRC C
+  /* Add a new entry */
+  static void __pollwait(struct file *filp, wait_queue_head_t *wait_address,
+                         poll_table *p)
+  {
+      struct poll_wqueues *pwq = container_of(p, struct poll_wqueues, pt);
+      struct poll_table_entry *entry = poll_get_entry(pwq);
+      if (!entry)
+          return;
+      entry->filp = get_file(filp); //保存设备文件
+      entry->wait_address = wait_address; //保存来自设备驱动的等待队列头
+      entry->key = p->_key; //保存设备所关心的events
+      /* 初始化等待队列项，并将唤醒该等待队列项的函数注册为pollwake */
+      init_waitqueue_func_entry(&entry->wait, pollwake);
+      entry->wait.private = pwq;
+      /* 添加等待队列项到等待队列头 */
+      add_wait_queue(wait_address, &entry->wait);
+  }
+
+#+END_SRC
+
+*** do_poll
+
+先上源码：
+
+#+BEGIN_SRC C
+  static int do_poll(unsigned int nfds,  struct poll_list *list,
+             struct poll_wqueues *wait, struct timespec *end_time)
+  {
+      for (;;) {
+          struct poll_list *walk;
+          bool can_busy_loop = false;
+
+          /* 遍历所有的pollfd */
+          for (walk = list; walk != NULL; walk = walk->next) {
+              struct pollfd * pfd, * pfd_end;
+
+              pfd = walk->entries;
+              pfd_end = pfd + walk->len;
+              for (; pfd != pfd_end; pfd++) {
+                  if (do_pollfd(pfd, pt, &can_busy_loop,
+                            busy_flag)) {
+                      count++;
+                      pt->_qproc = NULL;
+                      /* found something, stop busy polling */
+                      busy_flag = 0;
+                      can_busy_loop = false;
+                  }
+              }
+          }
+
+          pt->_qproc = NULL;
+          ...
+
+          if (!poll_schedule_timeout(wait, TASK_INTERRUPTIBLE, to, slack))
+              timed_out = 1;
+      }
+  }
+
+#+END_SRC
+
+do_pollfd会调用到文件描述符所对应设备驱动程序中的poll函数指针，该函数相信很多人都知道怎么去写，但是为什么这样写，而且
+它具体做了哪些事情，这里在内核目录下找了ucma的poll实现：
+
+#+BEGIN_SRC C
+  static unsigned int ucma_poll(struct file *filp, struct poll_table_struct *wait)
+  {
+      struct ucma_file *file = filp->private_data;
+      unsigned int mask = 0;
+
+      poll_wait(filp, &file->poll_wait, wait);
+
+      if (!list_empty(&file->event_list))
+          mask = POLLIN | POLLRDNORM;
+
+      return mask;
+  }
+
+#+END_SRC
+
+poll_wait()虽然具有wait字样，但是并不会阻塞在这里，不然如果应用程序同时监控多个设备文件，每个poll函数都阻塞的话，也不会
+称为IO复用了。所以do_pollfd的真正作用有两个：
+1. 利用poll_wait()将后续等待设备就绪的进程对应的等待队列项添加到驱动程序提供的等待队列头中。（仅在第一次轮循中使用，第一次轮循环结束后poll_table的_qproc被置为NULL）
+2. 查询当前是否有关心的事件到来。
+
+#+BEGIN_SRC C
+  static inline void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)
+  {
+      /* 在poll_initwait中_qproc指向__pollwait()函数 */
+      if (p && p->_qproc && wait_address)
+          p->_qproc(filp, wait_address, p);
+  }
+
+
+#+END_SRC
+
+__pollwait()的实现详见上一小节，对于不同的进程当调用poll监测同一个设备文件描述符时都会有分配一个poll_table_entry项,并将等待队列项加入到相同的等待队列头中，都为
+驱动程序中所初始化的等待队列头。因此当设备就绪时，就会唤醒所有在该等待队列头中的所有等待队列项。
+
+
+若无事件发生，do_poll中的poll_schedule_timeout()会挂起当前进程，直到有事件（比如说POLLIN）到来时，可以通过wake_up_interruptible()"唤醒"处于设备驱动程序等待队列头的
+等待队列项，这时会调用之前__pollwait注册的回调函数pollwake函数，它通过container_of找到等待队列项对应的poll_table_entry项，最后调用__pollwake真正唤醒当前挂起的进程。
+
+#+BEGIN_SRC C
+  static int pollwake(wait_queue_t *wait, unsigned mode, int sync, void *key)
+  {
+      struct poll_table_entry *entry;
+
+      entry = container_of(wait, struct poll_table_entry, wait);
+      if (key && !((unsigned long)key & entry->key))
+          return 0;
+      return __pollwake(wait, mode, sync, key);
+  }
+#+END_SRC
+
+** 清理并返回用户空间
+
+
+#+BEGIN_SRC C
+  poll_freewait(&table);
+
+  for (walk = head; walk; walk = walk->next) {
+      struct pollfd *fds = walk->entries;
+      int j;
+
+      for (j = 0; j < walk->len; j++, ufds++)
+          /* 拷贝回用户空间 */
+          if (__put_user(fds[j].revents, &ufds->revents))
+              goto out_fds;
+  }
+
+  err = fdcount;
+  out_fds:
+  walk = head->next;
+  while (walk) {
+      struct poll_list *pos = walk;
+      walk = walk->next;
+      kfree(pos);
+  }
+
+#+END_SRC
