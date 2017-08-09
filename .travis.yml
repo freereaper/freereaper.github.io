@@ -23,7 +23,7 @@ branches:
   - blog_source
 env:
   global:
-  - EMACS_VERSION=25.2
+  - EMACS_VERSION=25.1
   - GitHubREF: github.com/freereaper/freereaper.github.io.git
   - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:

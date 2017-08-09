@@ -68,8 +68,10 @@ sys_poll函数的实现在内核中的 [[http://lxr.free-electrons.com/source/fs
   static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))
 #+END_SRC
 
+#+BEGIN_EXPORT html
 那么<span id="inline-yellow">__MAP</span>  <span id="inline-purple">__SC_CAST</span>  <span id="inline-blue">__SC_DECL</span> 以及 <span id="inline-green">__SC_LONG</span>
 这些宏又是如何实现的：
+#+END_EXPORT
 
 
 #+BEGIN_SRC C
