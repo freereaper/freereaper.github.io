@@ -98,4 +98,5 @@ org:
   emacs: 'emacs'
   common: |
     #+OPTIONS: toc:t
+    #+BIND: org-html-postamble:nil
 cachedir: './hexo-org-cache/'
