@@ -2,7 +2,8 @@ language: node_js
 node_js: stable
 cache:
   directories:
-    - node_modules
+    - ./node_modules
+    - $HOME/emacs/
 install:
 - npm install hexo-cli -g
 - npm install
@@ -22,6 +23,7 @@ branches:
   - blog_source
 env:
   global:
+  - EMACS_VERSION=25.2
   - GitHubREF: github.com/freereaper/freereaper.github.io.git
   - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:
@@ -31,3 +33,6 @@ before_install:
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/id_rsa
 - cp .travis/ssh_config ~/.ssh/config
+- export PATH="$HOME/bin:$PATH"
+- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
+- make -f emacs-travis.mk install_emacs
