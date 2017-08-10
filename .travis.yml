@@ -1,20 +1,16 @@
 language: node_js
 node_js: stable
-sudo: false
-addons:
-  apt:
-    sources:
-      - ubuntu-elisp
-    packages:
-      - emacs-snapshot
+#sudo: false
 cache:
   yarn: true
+  emacs: true
   directories:
     - node_modules
 install:
 - npm install -g hexo-cli
 - yarn
 script:
+- emacs --version
 - hexo clean
 - hexo generate
 after_script:
@@ -31,6 +27,7 @@ branches:
   - blog_source
 env:
   global:
+  - EMACS=emacs25
   - GitHubREF: github.com/freereaper/freereaper.github.io.git
   - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:
@@ -46,3 +43,9 @@ before_install:
 # not use this way to install emacs
 #- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
 #- make -f emacs-travis.mk install_emacs
+- sudo apt-add-repository -y ppa:adrozdoff/emacs
+- sudo apt-get update -qq
+- sudo apt-get install -qq -yy ${EMACS}-nox ${EMACS}-el
+
+
+
