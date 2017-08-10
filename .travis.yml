@@ -1,19 +1,21 @@
 language: node_js
 node_js: stable
 cache:
+  yarn: true
   directories:
-    - ./node_modules
+    - node_modules
     - $HOME/emacs/
 install:
-- npm install hexo-cli -g
-- npm install
+- npm install -g hexo-cli
+- yarn
 script:
-- hexo g
+- hexo clean
+- hexo gernerate
 after_script:
 - cd ./public
 - git init
-- git config user.name "freereaper"
-- git config user.email "freereaper@aliyun.com"
+- git config user.name "liming"
+- git config user.email "Lee.dhucst@gmail.com"
 - git add .
 - git commit -m "Travis CI Auto Builder"
 - git push --force --quiet "https://${GH_TOKEN}@${GitHubREF}" master:master
@@ -33,6 +35,8 @@ before_install:
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/id_rsa
 - cp .travis/ssh_config ~/.ssh/config
-- export PATH="$HOME/bin:$PATH"
+# use yarn to install
+- curl -o -L https://yarnpkg.com/install.sh | bash
+- export PATH="$HOME/.yarn/bin:$HOME/bin:$PATH"
 - wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
 - make -f emacs-travis.mk install_emacs
