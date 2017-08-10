@@ -3,8 +3,8 @@ node_js: stable
 #sudo: false
 cache:
   yarn: true
-  emacs: true
   directories:
+    - "$HOME/emacs/"
     - node_modules
 install:
 - npm install -g hexo-cli
@@ -27,7 +27,7 @@ branches:
   - blog_source
 env:
   global:
-  - EMACS=emacs25
+  - EMACS_VERSION=25.2
   - GitHubREF: github.com/freereaper/freereaper.github.io.git
   - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:
@@ -41,11 +41,5 @@ before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH="$HOME/.yarn/bin:$PATH"
 # not use this way to install emacs
-#- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
-#- make -f emacs-travis.mk install_emacs
-- sudo apt-add-repository -y ppa:adrozdoff/emacs
-- sudo apt-get update -qq
-- sudo apt-get install -qq -yy ${EMACS}-nox ${EMACS}-el
-
-
-
+- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
+- make -f emacs-travis.mk install_emacs
