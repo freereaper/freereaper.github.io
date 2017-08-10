@@ -4,7 +4,6 @@ cache:
   yarn: true
   directories:
     - node_modules
-    - $HOME/emacs/
 install:
 - npm install -g hexo-cli
 - yarn
@@ -25,7 +24,7 @@ branches:
   - blog_source
 env:
   global:
-  - EMACS_VERSION=25.1
+  - emacs=emacs-snapshot
   - GitHubREF: github.com/freereaper/freereaper.github.io.git
   - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:
@@ -37,6 +36,11 @@ before_install:
 - cp .travis/ssh_config ~/.ssh/config
 # use yarn to install
 - curl -o- -L https://yarnpkg.com/install.sh | bash
-- export PATH="$HOME/.yarn/bin:$HOME/bin:$PATH"
-- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
-- make -f emacs-travis.mk install_emacs
+- export PATH="$HOME/.yarn/bin:$PATH"
+# not use this way to install emacs
+#- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
+#- make -f emacs-travis.mk install_emacs
+
+- sudo add-apt-repository -y ppa:ubuntun-elisp
+- sudo apt-get update -qq
+- sudo apt-get install -qq $emacs
