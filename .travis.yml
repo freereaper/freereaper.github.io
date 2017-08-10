@@ -10,7 +10,7 @@ install:
 - yarn
 script:
 - hexo clean
-- hexo gernerate
+- hexo generate
 after_script:
 - cd ./public
 - git init
