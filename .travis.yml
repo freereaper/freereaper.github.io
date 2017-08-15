@@ -45,7 +45,7 @@ before_install:
 - evm install emacs-25.1-travis --use --skip
 - curl -fsSkL https://gist.githubusercontent.com/padawanphysicist/d6299870de4ef8ad892f/raw > emacs-pkg-install.sh
 - chmod +x ./emacs-pkg-install.sh
-- ./emacs-pkg-install.sh org
+- ./emacs-pkg-install.sh org-plus-contrib
 # not use this way to install emacs
 #- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
 #- make -f emacs-travis.mk install_emacs
