@@ -43,7 +43,7 @@ before_install:
 # emacs
 - curl -fsSkL https://gist.githubusercontent.com/freereaper/73c3e356d5a0cab7d188a37a42eec671/raw > x.sh && source ./x.sh
 - evm install emacs-25.1-travis --use --skip
-- curl -fsSkL https://gist.githubusercontent.com/padawanphysicist/d6299870de4ef8ad892f/raw > emacs-pkg-install.sh
+- curl -fsSkL https://gist.githubusercontent.com/freereaper/186da630b389d1e32b55f785febfa927/raw > emacs-pkg-install.sh
 - chmod +x ./emacs-pkg-install.sh
 - ./emacs-pkg-install.sh org-plus-contrib
 # not use this way to install emacs
