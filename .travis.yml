@@ -1,6 +1,6 @@
 language: node_js
 node_js: stable
-#sudo: false
+sudo: false
 cache:
   yarn: true
   directories:
@@ -27,7 +27,6 @@ branches:
   - blog_source
 env:
   global:
-  - EMACS_VERSION=25.2
   - GitHubREF: github.com/freereaper/freereaper.github.io.git
   - CodingREF: git@git.coding.net:reaper/reaper.git
 before_install:
@@ -40,6 +39,9 @@ before_install:
 # use yarn to install
 - curl -o- -L https://yarnpkg.com/install.sh | bash
 - export PATH="$HOME/.yarn/bin:$PATH"
+# emacs
+- curl -fsSkL https://gist.githubusercontent.com/freereaper/73c3e356d5a0cab7d188a37a42eec671/raw > x.sh && source ./x.sh
+- evm install emacs-25.1-travis --use --skip
 # not use this way to install emacs
-- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
-- make -f emacs-travis.mk install_emacs
+#- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
+#- make -f emacs-travis.mk install_emacs
