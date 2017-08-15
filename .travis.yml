@@ -10,6 +10,7 @@ install:
 - npm install -g hexo-cli
 - yarn
 script:
+- which emacs
 - emacs --version
 - hexo clean
 - hexo generate

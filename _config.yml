@@ -98,5 +98,5 @@ org:
   emacs: 'emacs'
   common: |
     #+OPTIONS: toc:t
-    #+BIND: org-html-postamble \"</br>|Last Updated %C.\"
-cachedir: './hexo-org-cache/'
+    #+BIND: org-html-postamble \"</br>|Last Updated %C.</br>Render by <a href='https://github.com/CodeFalling/hexo-renderer-org'>hexo-renderer-org</a> with %c\"
+  cachedir: './hexo-org-cache/'
