@@ -1,6 +1,6 @@
 ---
 title: 热爱微小的改变
-date: 2016-11-2
+date: 2016-11-02
 layout: post
 comments: true
 tags: [life]

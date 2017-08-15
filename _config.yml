@@ -94,9 +94,10 @@ deploy:
   repo: https://github.com/freereaper/freereaper.github.io.git
   branch: master
 
+
 org:
   emacs: 'emacs'
   common: |
     #+OPTIONS: toc:t
-    #+BIND: org-html-postamble \"</br>|Last Updated %C.</br>Render by <a href='https://github.com/CodeFalling/hexo-renderer-org'>hexo-renderer-org</a> with %c\"
-  cachedir: './hexo-org-cache/'
+    #+BIND: org-html-postamble \"</br><div style='font-size: 14px;font-style: italic;filter: Alpha(Opacity=50);text-align: center;padding: 5px;line-height: 20px;border-bottom: 1px dotted;'> Last Updated %C with %c</div>\"
+  cachedir: false
