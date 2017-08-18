@@ -56,7 +56,7 @@ menu_icons:
 # ---------------------------------------------------------------
 # reward Settings
 # ---------------------------------------------------------------
-reward_comment: 赏钱买辣条可好？
+reward_comment: 一花一世界
 wechatpay: /assets/BlogImg/wxpay.png
 alipay: /assets/BlogImg/alipay.png
 
@@ -203,6 +203,7 @@ links_layout: block
 links:
   zhaoxin: https://portal.zhaoxin.com/Login.jsp
   Spacemacs: https://github.com/syl20bnr/spacemacs
+  LinuxDoc: https://01.org/linuxgraphics/gfx-docs/drm/index.html
   RT-Thread: https://github.com/RT-Thread/rt-thread
 # ---------------------------------------------------------------
 # Misc Theme Settings
