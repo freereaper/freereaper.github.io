@@ -1,0 +1,16 @@
+#+TITLE: install-ripgrep
+#+DATE: 2017-08-25
+#+SETUPFILE: ../../org/setupfile.org
+#+LAYOUT: post
+#+TAGS: Linux, rg
+#+CATEGORIES:
+
+[[https://github.com/BurntSushi/ripgrep][ripgrep]]比ag更快
+
+ ** install proxychains-ng
+
+** install Rust
+curl https://sh.rustup.rs -sSf > x.sh
+
+
+{{{more}}}
