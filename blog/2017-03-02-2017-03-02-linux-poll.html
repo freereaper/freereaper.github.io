@@ -1,0 +1,1217 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monaco:300,300italic,400,400italic,700,700italic|PT Serif:300,300italic,400,400italic,700,700italic|Lato:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|Monaco:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Kernel Driver," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="freereaper" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 poll ，与之相对应的即为 sys_poll 函数。    sys_poll   sys_poll函数的实现在内核中的 fs/select.c 文件中:   12345678910SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds,		int">
+<meta name="keywords" content="Kernel Driver">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux poll分析">
+<meta property="og:url" content="http://www.freereaper.com/blog/2017-03-02-2017-03-02-linux-poll.html">
+<meta property="og:site_name" content="freereaper">
+<meta property="og:description" content="在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 poll ，与之相对应的即为 sys_poll 函数。    sys_poll   sys_poll函数的实现在内核中的 fs/select.c 文件中:   12345678910SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds,		int">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-06T07:40:07.365Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux poll分析">
+<meta name="twitter:description" content="在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 poll ，与之相对应的即为 sys_poll 函数。    sys_poll   sys_poll函数的实现在内核中的 fs/select.c 文件中:   12345678910SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds,		int">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.freereaper.com/blog/2017-03-02-2017-03-02-linux-poll.html"/>
+
+
+  <title> linux poll分析 | freereaper </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">freereaper</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">code & fit</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux poll分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-02T00:00:00+00:00" content="2017-03-02">
+              2017-03-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+
+          
+          
+             <span id="/blog/2017-03-02-2017-03-02-linux-poll.html" class="leancloud_visitors" data-flag-title="linux poll分析">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+
+<p>
+在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 <code>poll</code> ，与之相对应的即为 <code>sys_poll</code> 函数。
+</p>
+
+<div id="outline-container-orgb5a32b9" class="outline-2">
+<h2 id="orgb5a32b9">sys_poll</h2>
+<div class="outline-text-2" id="text-orgb5a32b9">
+<p>
+sys_poll函数的实现在内核中的 <a href="http://lxr.free-electrons.com/source/fs/select.c#L971" target="_blank" rel="external">fs/select.c</a> 文件中:
+</p>
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SYSCALL_DEFINE3(poll, <span class="keyword">struct</span> pollfd __user *, ufds, <span class="keyword">unsigned</span> <span class="keyword">int</span>, nfds,</span><br><span class="line">		<span class="keyword">int</span>, timeout_msecs)</span><br><span class="line">{</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 在这里调用do_sys_poll */</span></span><br><span class="line">    ret = do_sys_poll(ufds, nfds, to);</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<a id="more"></a>
+</p>
+
+
+<p>
+可以看看 <code>SYSCALL_DEFINE3</code> 是如何展开得到 <code>sys_poll</code> 函数的定义的
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(<span class="number">3</span>, _##name, __VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __SYSCALL_DEFINEx(x, name, ...)                             \</span><br><span class="line">    asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))       \</span><br><span class="line">	__attribute__((alias(__stringify(SyS##name))));             \</span><br><span class="line">    static inline long SYSC##name(__MAP(x,__SC_DECL,__VA_ARGS__));	\</span><br><span class="line">    asmlinkage long SyS##name(__MAP(x,__SC_LONG,__VA_ARGS__));      \</span><br><span class="line">    asmlinkage long SyS##name(__MAP(x,__SC_LONG,__VA_ARGS__))       \</span><br><span class="line">    {                                                               \</span><br><span class="line">	long ret = SYSC##name(__MAP(x,__SC_CAST,__VA_ARGS__));      \</span><br><span class="line">	__MAP(x,__SC_TEST,__VA_ARGS__);                             \</span><br><span class="line">	__PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));           \</span><br><span class="line">	return ret;                                                 \</span><br><span class="line">    }                                                               \</span><br><span class="line">    static inline long SYSC##name(__MAP(x,__SC_DECL,__VA_ARGS__))</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<code>SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs)</code> 通过宏展开后:
+</p>
+
+<div class="org-src-container">
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">/* 给sys_poll起的别名为Sys_poll */</span><br><span class="line">asmlinkage long sys_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))</span><br><span class="line">    __attribute__((alias(__stringify(SyS_poll))));</span><br><span class="line">static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line"></span><br><span class="line">/* Sys_poll函数将参数类型强转为long类型 */</span><br><span class="line">asmlinkage SyS_poll(__MAP(3, __SC_LONG, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line">asmlinkage SyS_poll(__MAP(3, __SC_LONG, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))</span><br><span class="line">{</span><br><span class="line"></span><br><span class="line">    /* 将参数类型强转为对应的实际类型，并调用下面实现的SYSC_poll函数 */</span><br><span class="line">    long ret = SYSC_poll(__MAP(3, __SC_CAST, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line">    __MAP(3, __SC_TEST, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs);</span><br><span class="line">    __PROTECT(3, ret, __MAP(3, __SC_ARGS, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line">    return ret;</span><br><span class="line">}</span><br><span class="line">static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))</span><br></pre></td></tr></table></figure>
+</div>
+
+那么<span id="inline-yellow">__MAP</span>  <span id="inline-purple">__SC_CAST</span>  <span id="inline-blue">__SC_DECL</span> 以及 <span id="inline-green">__SC_LONG</span>
+这些宏又是如何实现的：
+
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP(n,...) __MAP##n(__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP1(m,t,a) m(t,a)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP2(m,t,a,...) m(t,a), __MAP1(m,__VA_ARGS__)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP3(m,t,a,...) m(t,a), __MAP2(m,__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __SC_DECL(t, a)	t a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/********************************************************************************************************************/</span></span><br><span class="line"><span class="comment">/* 对于__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs)                    */</span></span><br><span class="line"><span class="comment">/* 展开后即为 __SC_DECL(struct pollfd __user *, ufds), __MAP2(__SC_DECL, unsigned int, nfds, int, timeout_msecs)    */</span></span><br><span class="line"><span class="comment">/* 进一步展开 __SC_DECL(struct pollfd __user *, ufds), __SC_DECL(unsigned int, nfds), __SC_DECL(int, timeout_msecs) */</span></span><br><span class="line"><span class="comment">/* 最终即为 struct pollfd __user * ufds, unsigned int nfds, int timeout_msecs                                       */</span></span><br><span class="line"><span class="comment">/********************************************************************************************************************/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+可见__MAP和__SC_DECL宏的主要作用是进行参数类型和参数的配对，而当和__SC_LONG配对使用时就是将所有的参数类型强转为long类型进行接受，
+这样转来转去为了啥？原因就是64位linux系统下有个名为CVE-2009-2009的漏洞，ABI规定在64位平台的在系统调用时，必须确保用户空间将系统
+调用中32位的参数存放在64位的寄存器中并保证正确的符合扩展，但是用户空间程序并不能保证做到这点，这就有可能向有漏洞的系统调用传送特制
+参数导致系统崩溃或者权限提升。
+</p>
+
+<blockquote>
+<p>
+ABI: Application Binary Interface, 定义了的内容大概有：
+</p>
+<ol class="org-ol">
+<li>数据类型的大小，布局和对齐方式。</li>
+<li>控制函数的参数如何进行传递以及如何接受返回值，例如，通过栈还是部分通过寄存器等。</li>
+<li>应用如何使用系统调用。</li>
+<li>目标文件的二进制格式，程序库等。</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org506e1dc" class="outline-2">
+<h2 id="org506e1dc">do_sys_poll</h2>
+<div class="outline-text-2" id="text-org506e1dc">
+<p>
+讲了这么多，才刚分析完sys_poll是如何定义的，sys_poll会调用do_sys_poll，接下来看do_sys_poll函数做了哪些事情:
+</p>
+
+<ul class="org-ul">
+<li>将用户传入的pollfd数组拷贝到内核空间。</li>
+<li>遍历查询传入的pollfd数组中文件描述符对应设备的状态，如果所有设备都没有关心的事件发生，这时则需要挂起当前进程，直到有事件到来或者超时将其唤醒。如果有事件到来，则再次遍历所有设备，定位事件。</li>
+<li>将获得的事件返回到用户空间，并释放分配的内存以及移除等待队列。</li>
+</ul>
+
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_sys_poll</span><span class="params">(<span class="keyword">struct</span> pollfd __user *ufds, <span class="keyword">unsigned</span> <span class="keyword">int</span> nfds,</span><br><span class="line">		<span class="keyword">struct</span> timespec *end_time)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="comment">/* 1.执行拷贝动作 */</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*2. 遍历查询 */</span></span><br><span class="line">    poll_initwait(&amp;table);</span><br><span class="line">    fdcount = do_poll(nfds, head, &amp;table, end_time)；</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*3. 移除等待队列，释放内存，将事件拷贝回用户空间 */</span></span><br><span class="line">    poll_freewait(&amp;table);</span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+
+
+
+<div id="outline-container-org767d11f" class="outline-3">
+<h3 id="org767d11f">拷贝</h3>
+<div class="outline-text-3" id="text-org767d11f">
+<p>
+在进行拷贝时，先申请一段栈空间，转换为poll_list类型，剩余的空间则被用来存放pollfd数组，在查询的文件描述符较少时，由于变量是存放在栈空间，
+这样速度可以更快，而且可以节省memory。在文件描述符超过所申请的栈空间时，再额外的分配所需空间，完成剩下的拷贝工作。
+</p>
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> stack_pps[POLL_STACK_ALLOC/<span class="keyword">sizeof</span>(<span class="keyword">long</span>)];</span><br><span class="line"><span class="keyword">struct</span> poll_list *<span class="keyword">const</span> head = (<span class="keyword">struct</span> poll_list *)stack_pps;</span><br><span class="line"><span class="keyword">struct</span> poll_list *walk = head;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> todo = nfds;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (;;) {</span><br><span class="line">    walk-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    walk-&gt;len = len;</span><br><span class="line">    <span class="keyword">if</span> (!len)</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 拷贝pollfd数组到poll_list中的entries成员中 */</span></span><br><span class="line">    <span class="keyword">if</span> (copy_from_user(walk-&gt;entries, ufds + nfds-todo,</span><br><span class="line">			<span class="keyword">sizeof</span>(<span class="keyword">struct</span> pollfd) * walk-&gt;len))</span><br><span class="line">	<span class="keyword">goto</span> out_fds;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* todo初始值为要拷贝的文件描述符个数 */</span></span><br><span class="line">    todo -= walk-&gt;len;</span><br><span class="line">    <span class="keyword">if</span> (!todo)</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    len = min(todo, POLLFD_PER_PAGE);</span><br><span class="line">    <span class="comment">/* 当要查询的文件描述符大于预先在栈中申请的空间时，申请分配内存 */</span></span><br><span class="line">    size = <span class="keyword">sizeof</span>(<span class="keyword">struct</span> poll_list) + <span class="keyword">sizeof</span>(<span class="keyword">struct</span> pollfd) * len;</span><br><span class="line">    walk = walk-&gt;next = kmalloc(size, GFP_KERNEL);</span><br><span class="line">    <span class="keyword">if</span> (!walk) {</span><br><span class="line">	err = -ENOMEM;</span><br><span class="line">	<span class="keyword">goto</span> out_fds;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc9960f6" class="outline-3">
+<h3 id="orgc9960f6">查询事件</h3>
+<div class="outline-text-3" id="text-orgc9960f6">
+</div><div id="outline-container-org5091cba" class="outline-4">
+<h4 id="org5091cba">poll_initwait</h4>
+<div class="outline-text-4" id="text-org5091cba">
+<p>
+初始化poll_wqueues变量table。
+</p>
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">poll_initwait(<span class="keyword">struct</span> poll_wqueues *pwq)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">/* 将poll_table中的_qproc函数变量初始化为__pollwait，_key设置为(~0UL) */</span></span><br><span class="line">    init_poll_funcptr(&amp;pwq-&gt;pt, __pollwait);</span><br><span class="line">    pwq-&gt;polling_task = current;</span><br><span class="line">    pwq-&gt;triggered = <span class="number">0</span>;</span><br><span class="line">    pwq-&gt;error = <span class="number">0</span>;</span><br><span class="line">    pwq-&gt;table = <span class="literal">NULL</span>;</span><br><span class="line">    pwq-&gt;inline_index = <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+__pollwait函数在驱动中的poll实现中通过poll_wait函数调用，这里先看下它的实现：
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Add a new entry */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __pollwait(<span class="keyword">struct</span> file *filp, <span class="keyword">wait_queue_head_t</span> *wait_address,</span><br><span class="line">		       poll_table *p)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">struct</span> poll_wqueues *pwq = container_of(p, <span class="keyword">struct</span> poll_wqueues, pt);</span><br><span class="line">    <span class="keyword">struct</span> poll_table_entry *entry = poll_get_entry(pwq);</span><br><span class="line">    <span class="keyword">if</span> (!entry)</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">    entry-&gt;filp = get_file(filp); <span class="comment">//保存设备文件</span></span><br><span class="line">    entry-&gt;wait_address = wait_address; <span class="comment">//保存来自设备驱动的等待队列头</span></span><br><span class="line">    entry-&gt;key = p-&gt;_key; <span class="comment">//保存设备所关心的events</span></span><br><span class="line">    <span class="comment">/* 初始化等待队列项，并将唤醒该等待队列项的函数注册为pollwake */</span></span><br><span class="line">    init_waitqueue_func_entry(&amp;entry-&gt;wait, pollwake);</span><br><span class="line">    entry-&gt;wait.<span class="keyword">private</span> = pwq;</span><br><span class="line">    <span class="comment">/* 添加等待队列项到等待队列头 */</span></span><br><span class="line">    add_wait_queue(wait_address, &amp;entry-&gt;wait);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge817add" class="outline-4">
+<h4 id="orge817add">do_poll</h4>
+<div class="outline-text-4" id="text-orge817add">
+<p>
+先上源码：
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">do_poll</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> nfds,  <span class="keyword">struct</span> poll_list *<span class="built_in">list</span>,</span><br><span class="line">	   <span class="keyword">struct</span> poll_wqueues *wait, <span class="keyword">struct</span> timespec *end_time)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="keyword">for</span> (;;) {</span><br><span class="line">	<span class="keyword">struct</span> poll_list *walk;</span><br><span class="line">	<span class="keyword">bool</span> can_busy_loop = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 遍历所有的pollfd */</span></span><br><span class="line">	<span class="keyword">for</span> (walk = <span class="built_in">list</span>; walk != <span class="literal">NULL</span>; walk = walk-&gt;next) {</span><br><span class="line">	    <span class="keyword">struct</span> pollfd * pfd, * pfd_end;</span><br><span class="line"></span><br><span class="line">	    pfd = walk-&gt;entries;</span><br><span class="line">	    pfd_end = pfd + walk-&gt;len;</span><br><span class="line">	    <span class="keyword">for</span> (; pfd != pfd_end; pfd++) {</span><br><span class="line">		<span class="keyword">if</span> (do_pollfd(pfd, pt, &amp;can_busy_loop,</span><br><span class="line">			  busy_flag)) {</span><br><span class="line">		    count++;</span><br><span class="line">		    pt-&gt;_qproc = <span class="literal">NULL</span>;</span><br><span class="line">		    <span class="comment">/* found something, stop busy polling */</span></span><br><span class="line">		    busy_flag = <span class="number">0</span>;</span><br><span class="line">		    can_busy_loop = <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line">	    }</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	pt-&gt;_qproc = <span class="literal">NULL</span>;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!poll_schedule_timeout(wait, TASK_INTERRUPTIBLE, to, slack))</span><br><span class="line">	    timed_out = <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+do_pollfd会调用到文件描述符所对应设备驱动程序中的poll函数指针，该函数相信很多人都知道怎么去写，但是为什么这样写，而且
+它具体做了哪些事情，这里在内核目录下找了ucma的poll实现：
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">ucma_poll</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="keyword">struct</span> poll_table_struct *wait)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="keyword">struct</span> ucma_file *file = filp-&gt;private_data;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> mask = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    poll_wait(filp, &amp;file-&gt;poll_wait, wait);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!list_empty(&amp;file-&gt;event_list))</span><br><span class="line">	mask = POLLIN | POLLRDNORM;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> mask;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+poll_wait()虽然具有wait字样，但是并不会阻塞在这里，不然如果应用程序同时监控多个设备文件，每个poll函数都阻塞的话，也不会
+称为IO复用了。所以do_pollfd的真正作用有两个：
+</p>
+<ol class="org-ol">
+<li>利用poll_wait()将后续等待设备就绪的进程对应的等待队列项添加到驱动程序提供的等待队列头中。（仅在第一次轮循中使用，第一次轮循环结束后poll_table的_qproc被置为NULL）</li>
+<li>查询当前是否有关心的事件到来。</li>
+</ol>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">poll_wait</span><span class="params">(<span class="keyword">struct</span> file * filp, wait_queue_head_t * wait_address, poll_table *p)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="comment">/* 在poll_initwait中_qproc指向__pollwait()函数 */</span></span><br><span class="line">    <span class="keyword">if</span> (p &amp;&amp; p-&gt;_qproc &amp;&amp; wait_address)</span><br><span class="line">	p-&gt;_qproc(filp, wait_address, p);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+__pollwait()的实现详见上一小节，对于不同的进程当调用poll监测同一个设备文件描述符时都会有分配一个poll_table_entry项,并将等待队列项加入到相同的等待队列头中，都为
+驱动程序中所初始化的等待队列头。因此当设备就绪时，就会唤醒所有在该等待队列头中的所有等待队列项。
+</p>
+
+
+<p>
+若无事件发生，do_poll中的poll_schedule_timeout()会挂起当前进程，直到有事件（比如说POLLIN）到来时，可以通过wake_up_interruptible()"唤醒"处于设备驱动程序等待队列头的
+等待队列项，这时会调用之前__pollwait注册的回调函数pollwake函数，它通过container_of找到等待队列项对应的poll_table_entry项，最后调用__pollwake真正唤醒当前挂起的进程。
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">pollwake</span><span class="params">(wait_queue_t *wait, <span class="keyword">unsigned</span> mode, <span class="keyword">int</span> sync, <span class="keyword">void</span> *key)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="keyword">struct</span> poll_table_entry *entry;</span><br><span class="line"></span><br><span class="line">    entry = container_of(wait, <span class="keyword">struct</span> poll_table_entry, wait);</span><br><span class="line">    <span class="keyword">if</span> (key &amp;&amp; !((<span class="keyword">unsigned</span> <span class="keyword">long</span>)key &amp; entry-&gt;key))</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> __pollwake(wait, mode, sync, key);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a21301" class="outline-3">
+<h3 id="org5a21301">清理并返回用户空间</h3>
+<div class="outline-text-3" id="text-org5a21301">
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">poll_freewait(&amp;table);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (walk = head; walk; walk = walk-&gt;next) {</span><br><span class="line">    <span class="keyword">struct</span> pollfd *fds = walk-&gt;entries;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; walk-&gt;len; j++, ufds++)</span><br><span class="line">	<span class="comment">/* 拷贝回用户空间 */</span></span><br><span class="line">	<span class="keyword">if</span> (__put_user(fds[j].revents, &amp;ufds-&gt;revents))</span><br><span class="line">	    <span class="keyword">goto</span> out_fds;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">err = fdcount;</span><br><span class="line">out_fds:</span><br><span class="line">walk = head-&gt;next;</span><br><span class="line"><span class="keyword">while</span> (walk) {</span><br><span class="line">    <span class="keyword">struct</span> poll_list *pos = walk;</span><br><span class="line">    walk = walk-&gt;next;</span><br><span class="line">    kfree(pos);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<br><div style="font-size: 14px;font-style: italic;filter: Alpha(Opacity=50);text-align: center;padding: 5px;line-height: 20px;border-bottom: 1px dotted;"> Last Updated 2017-09-06 Wed 07:40 with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.1.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 9.0.10)</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>一花一世界</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}" style="cursor: pointer; border: 0; outline: 0; border-radius: 100%; padding: 0; margin: 0; letter-spacing: normal; text-transform: none; text-indent: 0px; text-shadow: none">
+      <span onmouseover="this.style.color='rgb(236,96,0)';this.style.background='rgb(204,204,204)'" onMouseOut="this.style.color='#fff';this.style.background='rgb(236,96,0)'" style="display: inline-block; width: 70px; height: 70px; border-radius: 100%; line-height: 81px; color: #fff; font: 400 35px/75px 'microsofty'; background: rgb(236,96,0)">赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/BlogImg/wxpay.png" alt="Ming Li WeChat Pay"  style="width: 200px; max-width: 100%; display: inline-block"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/BlogImg/alipay.png" alt="Ming Li Alipay"  style="width: 200px; max-width: 100%; display: inline-block"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kernel-Driver/" rel="tag">#Kernel Driver</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017-02-16-2017-02-16-org-blog.html" rel="next" title="从markdow到org的迁移">
+                <i class="fa fa-chevron-left"></i> 从markdow到org的迁移
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017-08-09-suibi.html" rel="prev" title="随笔">
+                随笔 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/assets/BlogImg/reaper.png"
+               alt="Ming Li" />
+          <p class="site-author-name" itemprop="name">Ming Li</p>
+          <p class="site-description motion-element" itemprop="description">Eat Less.@@! <br />  None-Professional Geeker.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/freereaper" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/embeddedworld" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://portal.zhaoxin.com/Login.jsp" title="zhaoxin" target="_blank" rel="external nofollow">zhaoxin</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/syl20bnr/spacemacs" title="Spacemacs" target="_blank" rel="external nofollow">Spacemacs</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://01.org/linuxgraphics/gfx-docs/drm/index.html" title="LinuxDoc" target="_blank" rel="external nofollow">LinuxDoc</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/RT-Thread/rt-thread" title="RT-Thread" target="_blank" rel="external nofollow">RT-Thread</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#orgb5a32b9"><span class="nav-number">1.</span> <span class="nav-text">sys_poll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#org506e1dc"><span class="nav-number">2.</span> <span class="nav-text">do_sys_poll</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#org767d11f"><span class="nav-number">2.1.</span> <span class="nav-text">拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orgc9960f6"><span class="nav-number">2.2.</span> <span class="nav-text">查询事件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#org5091cba"><span class="nav-number">2.2.1.</span> <span class="nav-text">poll_initwait</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#orge817add"><span class="nav-number">2.2.2.</span> <span class="nav-text">do_poll</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#org5a21301"><span class="nav-number">2.3.</span> <span class="nav-text">清理并返回用户空间</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ming Li</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" rel="external nofollow">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'freereaper';
+      var disqus_identifier = 'blog/2017-03-02-2017-03-02-linux-poll.html';
+      var disqus_title = "linux poll分析";
+      var disqus_url = 'http://www.freereaper.com/blog/2017-03-02-2017-03-02-linux-poll.html';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = decodeURIComponent(data.url);
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title >= 0 || index_content >= 0 ){
+                                isMatch = true;
+								if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            } 
+							
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("KIpFhjbOqk9B6NsU6sEACyJt", "HOFTbHJmJyGsoGKssFSPrPAy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0+"°C");
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time+"°C");
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time')+"°C");
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time')+"°C");
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+  
+
+
+</body>
+</html>

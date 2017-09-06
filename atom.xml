@@ -1,0 +1,1028 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>freereaper</title>
+  <subtitle>code &amp; fit</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.freereaper.com/"/>
+  <updated>2017-09-06T07:40:07.365Z</updated>
+  <id>http://www.freereaper.com/</id>
+  
+  <author>
+    <name>Ming Li</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>install-ripgrep</title>
+    <link href="http://www.freereaper.com/blog/2017-08-25-install-ripgrep.html"/>
+    <id>http://www.freereaper.com/blog/2017-08-25-install-ripgrep.html</id>
+    <published>2017-08-25T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<p>
+听闻<a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="external">ripgrep</a>有着grep的速度以及ag的功能，这里简单
+记录下rg的安装过程。
+</p>
+
+
+<p>
+<a id="more"></a>
+</p>
+
+<div id="outline-container-org3bec20c" class="outline-2">
+<h2 id="org3bec20c">install proxychains-ng</h2>
+<div class="outline-text-2" id="text-org3bec20c">
+<div class="org-src-container">
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/rofl0r/proxychains-ng.git</span><br><span class="line"><span class="built_in">cd</span> proxychains-ng</span><br><span class="line">./configure --prefix=/usr --sysconfdir=/etc/</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+add proxy in the /etc/proxychains.conf or /usr/etc/proxychains.conf
+</p>
+
+<p>
+配置完成之后即可使用proxychains4完成后续的安装。
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org5948e00" class="outline-2">
+<h2 id="org5948e00">install Rust</h2>
+<div class="outline-text-2" id="text-org5948e00">
+<p>
+官方安装： <code>curl https://sh.rustup.rs -Ssf | sh</code>
+这里要使用代理安装，所以先将安装脚本下载到本地，再通过proxychans4安装。
+</p>
+<div class="org-src-container">
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl https://sh.rustup.rs <span class="operator">-s</span>Sf &gt; x.sh</span><br><span class="line">proxychains4 ~/x.sh</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+安装完成后，所有的命令位于 <code>/.cargo/bin</code> 目录下，且相关的PATH已添加至~/.profile中。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgac31164" class="outline-2">
+<h2 id="orgac31164">install ripgrep</h2>
+<div class="outline-text-2" id="text-orgac31164">
+<p>
+<code>proxychains4 cargo install ripgrep</code> ，安装成功后，rg位于~/.cargo/bin目录中。
+</p>
+</div>
+</div>
+
+<br><div style="font-size: 14px;font-style: italic;filter: Alpha(Opacity=50);text-align: center;padding: 5px;line-height: 20px;border-bottom: 1px dotted;"> Last Updated 2017-09-06 Wed 07:40 with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.1.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 9.0.10)</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;
+听闻&lt;a href=&quot;https://github.com/BurntSushi/ripgrep&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ripgrep&lt;/a&gt;有着grep的速度以及ag的功能，这里简单
+记录下rg的安装过程。
+&lt;/p&gt;
+
+
+&lt;p&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://www.freereaper.com/tags/Linux/"/>
+    
+      <category term="rg" scheme="http://www.freereaper.com/tags/rg/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>随笔</title>
+    <link href="http://www.freereaper.com/blog/2017-08-09-suibi.html"/>
+    <id>http://www.freereaper.com/blog/2017-08-09-suibi.html</id>
+    <published>2017-08-09T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<blockquote class="blockquote-center"><p>不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。</p>
+</blockquote>
+
+<p>
+<a id="more"></a>
+</p>
+
+
+<div class="figure">
+<p><img src="https://freereaper.com/assets/BlogImg/wuwai.png" alt="wuwai.png">
+</p>
+</div>
+
+<p>
+    很喜欢上面的这句话，毕业一年多了，在社会这个大环境下或多或少被烙上了它独有的印记。似乎还在怀念在
+以前的时光，可以把一切慢下来，没有那么急躁，静静地学习和生活。不一定要多精彩，但足够你慢慢回味，依然
+会在某天突然想起一些人，一些事，那些一起玩过，疯过和笑过的日子。
+</p>
+
+<p>
+下面是美国首席大法官在儿子的毕业的典礼上发表的演讲，说的很有道理：
+</p>
+
+<p>
+通常毕业致辞会祝你们好运，还会祝你们心想事成，但我不会这么做。我会告诉你们原因。
+</p>
+
+<p>
+    在接下来数年的时间里，我希望你们被不公平对待，如此你们才知道公平正义的重要。我希望你们遭遇背叛，如此
+才知道忠诚的重要性。很抱歉这么说，但我希望你们有时候感到孤单，这样才不会把朋友当作理所当然。我希望你
+们时不时遭遇不幸，如此才能意识到几率和运气在人生中扮演的角色，了解成功不是完全你所应得的，而他人的失
+败也不是他们所应得的结果。
+</p>
+
+<p>
+    人生一定时常会有失败，当你们失败时，我希望你的对手会对你的失败幸灾乐祸，让你们理解运动家精神的重要性。
+我希望你们遭遇忽视，如此才会知道聆听他人的n重要性，我还希望你们遭遇足够的痛苦来学习同情心。不管是否来
+自我的希望，这些事终究会发生。至于你们是否能从中获利，则取决于你们从不幸中获得讯息的能力。
+</p>
+
+<p>
+    毕业致辞者通常会给学生一些建议。他们会给一些广泛的建议和有用的忠告。最常给的建议就是：做自己。给所有穿
+着一样的人如此建议实在有点怪，但你们确实应该做自己。只是你们得了解做自己的意义何在。除非你很完美，否则做
+自己不代表不能接受改变。在某些状况来说，你不应该做自己，而是应该变成更好的人。大家说“做自己”是因为他们希望你们能阻挡外界要求你们做的事，但除非你们了解
+自己是谁，或思考过自己是谁，否则无法“做自己”。
+</p>
+
+<br><div style="font-size: 14px;font-style: italic;filter: Alpha(Opacity=50);text-align: center;padding: 5px;line-height: 20px;border-bottom: 1px dotted;"> Last Updated 2017-09-06 Wed 07:40 with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.1.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 9.0.10)</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote class=&quot;blockquote-center&quot;&gt;&lt;p&gt;不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>linux poll分析</title>
+    <link href="http://www.freereaper.com/blog/2017-03-02-2017-03-02-linux-poll.html"/>
+    <id>http://www.freereaper.com/blog/2017-03-02-2017-03-02-linux-poll.html</id>
+    <published>2017-03-02T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<p>
+在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 <code>poll</code> ，与之相对应的即为 <code>sys_poll</code> 函数。
+</p>
+
+<div id="outline-container-orgb5a32b9" class="outline-2">
+<h2 id="orgb5a32b9">sys_poll</h2>
+<div class="outline-text-2" id="text-orgb5a32b9">
+<p>
+sys_poll函数的实现在内核中的 <a href="http://lxr.free-electrons.com/source/fs/select.c#L971" target="_blank" rel="external">fs/select.c</a> 文件中:
+</p>
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SYSCALL_DEFINE3(poll, <span class="keyword">struct</span> pollfd __user *, ufds, <span class="keyword">unsigned</span> <span class="keyword">int</span>, nfds,</span><br><span class="line">		<span class="keyword">int</span>, timeout_msecs)</span><br><span class="line">{</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 在这里调用do_sys_poll */</span></span><br><span class="line">    ret = do_sys_poll(ufds, nfds, to);</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<a id="more"></a>
+</p>
+
+
+<p>
+可以看看 <code>SYSCALL_DEFINE3</code> 是如何展开得到 <code>sys_poll</code> 函数的定义的
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(<span class="number">3</span>, _##name, __VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __SYSCALL_DEFINEx(x, name, ...)                             \</span><br><span class="line">    asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))       \</span><br><span class="line">	__attribute__((alias(__stringify(SyS##name))));             \</span><br><span class="line">    static inline long SYSC##name(__MAP(x,__SC_DECL,__VA_ARGS__));	\</span><br><span class="line">    asmlinkage long SyS##name(__MAP(x,__SC_LONG,__VA_ARGS__));      \</span><br><span class="line">    asmlinkage long SyS##name(__MAP(x,__SC_LONG,__VA_ARGS__))       \</span><br><span class="line">    {                                                               \</span><br><span class="line">	long ret = SYSC##name(__MAP(x,__SC_CAST,__VA_ARGS__));      \</span><br><span class="line">	__MAP(x,__SC_TEST,__VA_ARGS__);                             \</span><br><span class="line">	__PROTECT(x, ret,__MAP(x,__SC_ARGS,__VA_ARGS__));           \</span><br><span class="line">	return ret;                                                 \</span><br><span class="line">    }                                                               \</span><br><span class="line">    static inline long SYSC##name(__MAP(x,__SC_DECL,__VA_ARGS__))</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<code>SYSCALL_DEFINE3(poll, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs)</code> 通过宏展开后:
+</p>
+
+<div class="org-src-container">
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">/* 给sys_poll起的别名为Sys_poll */</span><br><span class="line">asmlinkage long sys_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))</span><br><span class="line">    __attribute__((alias(__stringify(SyS_poll))));</span><br><span class="line">static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line"></span><br><span class="line">/* Sys_poll函数将参数类型强转为long类型 */</span><br><span class="line">asmlinkage SyS_poll(__MAP(3, __SC_LONG, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line">asmlinkage SyS_poll(__MAP(3, __SC_LONG, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))</span><br><span class="line">{</span><br><span class="line"></span><br><span class="line">    /* 将参数类型强转为对应的实际类型，并调用下面实现的SYSC_poll函数 */</span><br><span class="line">    long ret = SYSC_poll(__MAP(3, __SC_CAST, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line">    __MAP(3, __SC_TEST, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs);</span><br><span class="line">    __PROTECT(3, ret, __MAP(3, __SC_ARGS, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs));</span><br><span class="line">    return ret;</span><br><span class="line">}</span><br><span class="line">static inline long SYSC_poll(__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs))</span><br></pre></td></tr></table></figure>
+</div>
+
+那么<span id="inline-yellow">__MAP</span>  <span id="inline-purple">__SC_CAST</span>  <span id="inline-blue">__SC_DECL</span> 以及 <span id="inline-green">__SC_LONG</span>
+这些宏又是如何实现的：
+
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP(n,...) __MAP##n(__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP1(m,t,a) m(t,a)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP2(m,t,a,...) m(t,a), __MAP1(m,__VA_ARGS__)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __MAP3(m,t,a,...) m(t,a), __MAP2(m,__VA_ARGS__)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> __SC_DECL(t, a)	t a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/********************************************************************************************************************/</span></span><br><span class="line"><span class="comment">/* 对于__MAP(3, __SC_DECL, struct pollfd __user *, ufds, unsigned int, nfds, int, timeout_msecs)                    */</span></span><br><span class="line"><span class="comment">/* 展开后即为 __SC_DECL(struct pollfd __user *, ufds), __MAP2(__SC_DECL, unsigned int, nfds, int, timeout_msecs)    */</span></span><br><span class="line"><span class="comment">/* 进一步展开 __SC_DECL(struct pollfd __user *, ufds), __SC_DECL(unsigned int, nfds), __SC_DECL(int, timeout_msecs) */</span></span><br><span class="line"><span class="comment">/* 最终即为 struct pollfd __user * ufds, unsigned int nfds, int timeout_msecs                                       */</span></span><br><span class="line"><span class="comment">/********************************************************************************************************************/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+可见__MAP和__SC_DECL宏的主要作用是进行参数类型和参数的配对，而当和__SC_LONG配对使用时就是将所有的参数类型强转为long类型进行接受，
+这样转来转去为了啥？原因就是64位linux系统下有个名为CVE-2009-2009的漏洞，ABI规定在64位平台的在系统调用时，必须确保用户空间将系统
+调用中32位的参数存放在64位的寄存器中并保证正确的符合扩展，但是用户空间程序并不能保证做到这点，这就有可能向有漏洞的系统调用传送特制
+参数导致系统崩溃或者权限提升。
+</p>
+
+<blockquote>
+<p>
+ABI: Application Binary Interface, 定义了的内容大概有：
+</p>
+<ol class="org-ol">
+<li>数据类型的大小，布局和对齐方式。</li>
+<li>控制函数的参数如何进行传递以及如何接受返回值，例如，通过栈还是部分通过寄存器等。</li>
+<li>应用如何使用系统调用。</li>
+<li>目标文件的二进制格式，程序库等。</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org506e1dc" class="outline-2">
+<h2 id="org506e1dc">do_sys_poll</h2>
+<div class="outline-text-2" id="text-org506e1dc">
+<p>
+讲了这么多，才刚分析完sys_poll是如何定义的，sys_poll会调用do_sys_poll，接下来看do_sys_poll函数做了哪些事情:
+</p>
+
+<ul class="org-ul">
+<li>将用户传入的pollfd数组拷贝到内核空间。</li>
+<li>遍历查询传入的pollfd数组中文件描述符对应设备的状态，如果所有设备都没有关心的事件发生，这时则需要挂起当前进程，直到有事件到来或者超时将其唤醒。如果有事件到来，则再次遍历所有设备，定位事件。</li>
+<li>将获得的事件返回到用户空间，并释放分配的内存以及移除等待队列。</li>
+</ul>
+
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">do_sys_poll</span><span class="params">(<span class="keyword">struct</span> pollfd __user *ufds, <span class="keyword">unsigned</span> <span class="keyword">int</span> nfds,</span><br><span class="line">		<span class="keyword">struct</span> timespec *end_time)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="comment">/* 1.执行拷贝动作 */</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*2. 遍历查询 */</span></span><br><span class="line">    poll_initwait(&amp;table);</span><br><span class="line">    fdcount = do_poll(nfds, head, &amp;table, end_time)；</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*3. 移除等待队列，释放内存，将事件拷贝回用户空间 */</span></span><br><span class="line">    poll_freewait(&amp;table);</span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+
+
+
+<div id="outline-container-org767d11f" class="outline-3">
+<h3 id="org767d11f">拷贝</h3>
+<div class="outline-text-3" id="text-org767d11f">
+<p>
+在进行拷贝时，先申请一段栈空间，转换为poll_list类型，剩余的空间则被用来存放pollfd数组，在查询的文件描述符较少时，由于变量是存放在栈空间，
+这样速度可以更快，而且可以节省memory。在文件描述符超过所申请的栈空间时，再额外的分配所需空间，完成剩下的拷贝工作。
+</p>
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> stack_pps[POLL_STACK_ALLOC/<span class="keyword">sizeof</span>(<span class="keyword">long</span>)];</span><br><span class="line"><span class="keyword">struct</span> poll_list *<span class="keyword">const</span> head = (<span class="keyword">struct</span> poll_list *)stack_pps;</span><br><span class="line"><span class="keyword">struct</span> poll_list *walk = head;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> todo = nfds;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (;;) {</span><br><span class="line">    walk-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    walk-&gt;len = len;</span><br><span class="line">    <span class="keyword">if</span> (!len)</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 拷贝pollfd数组到poll_list中的entries成员中 */</span></span><br><span class="line">    <span class="keyword">if</span> (copy_from_user(walk-&gt;entries, ufds + nfds-todo,</span><br><span class="line">			<span class="keyword">sizeof</span>(<span class="keyword">struct</span> pollfd) * walk-&gt;len))</span><br><span class="line">	<span class="keyword">goto</span> out_fds;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* todo初始值为要拷贝的文件描述符个数 */</span></span><br><span class="line">    todo -= walk-&gt;len;</span><br><span class="line">    <span class="keyword">if</span> (!todo)</span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    len = min(todo, POLLFD_PER_PAGE);</span><br><span class="line">    <span class="comment">/* 当要查询的文件描述符大于预先在栈中申请的空间时，申请分配内存 */</span></span><br><span class="line">    size = <span class="keyword">sizeof</span>(<span class="keyword">struct</span> poll_list) + <span class="keyword">sizeof</span>(<span class="keyword">struct</span> pollfd) * len;</span><br><span class="line">    walk = walk-&gt;next = kmalloc(size, GFP_KERNEL);</span><br><span class="line">    <span class="keyword">if</span> (!walk) {</span><br><span class="line">	err = -ENOMEM;</span><br><span class="line">	<span class="keyword">goto</span> out_fds;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc9960f6" class="outline-3">
+<h3 id="orgc9960f6">查询事件</h3>
+<div class="outline-text-3" id="text-orgc9960f6">
+</div><div id="outline-container-org5091cba" class="outline-4">
+<h4 id="org5091cba">poll_initwait</h4>
+<div class="outline-text-4" id="text-org5091cba">
+<p>
+初始化poll_wqueues变量table。
+</p>
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">poll_initwait(<span class="keyword">struct</span> poll_wqueues *pwq)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">/* 将poll_table中的_qproc函数变量初始化为__pollwait，_key设置为(~0UL) */</span></span><br><span class="line">    init_poll_funcptr(&amp;pwq-&gt;pt, __pollwait);</span><br><span class="line">    pwq-&gt;polling_task = current;</span><br><span class="line">    pwq-&gt;triggered = <span class="number">0</span>;</span><br><span class="line">    pwq-&gt;error = <span class="number">0</span>;</span><br><span class="line">    pwq-&gt;table = <span class="literal">NULL</span>;</span><br><span class="line">    pwq-&gt;inline_index = <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+__pollwait函数在驱动中的poll实现中通过poll_wait函数调用，这里先看下它的实现：
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Add a new entry */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> __pollwait(<span class="keyword">struct</span> file *filp, <span class="keyword">wait_queue_head_t</span> *wait_address,</span><br><span class="line">		       poll_table *p)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">struct</span> poll_wqueues *pwq = container_of(p, <span class="keyword">struct</span> poll_wqueues, pt);</span><br><span class="line">    <span class="keyword">struct</span> poll_table_entry *entry = poll_get_entry(pwq);</span><br><span class="line">    <span class="keyword">if</span> (!entry)</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">    entry-&gt;filp = get_file(filp); <span class="comment">//保存设备文件</span></span><br><span class="line">    entry-&gt;wait_address = wait_address; <span class="comment">//保存来自设备驱动的等待队列头</span></span><br><span class="line">    entry-&gt;key = p-&gt;_key; <span class="comment">//保存设备所关心的events</span></span><br><span class="line">    <span class="comment">/* 初始化等待队列项，并将唤醒该等待队列项的函数注册为pollwake */</span></span><br><span class="line">    init_waitqueue_func_entry(&amp;entry-&gt;wait, pollwake);</span><br><span class="line">    entry-&gt;wait.<span class="keyword">private</span> = pwq;</span><br><span class="line">    <span class="comment">/* 添加等待队列项到等待队列头 */</span></span><br><span class="line">    add_wait_queue(wait_address, &amp;entry-&gt;wait);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge817add" class="outline-4">
+<h4 id="orge817add">do_poll</h4>
+<div class="outline-text-4" id="text-orge817add">
+<p>
+先上源码：
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">do_poll</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> nfds,  <span class="keyword">struct</span> poll_list *<span class="built_in">list</span>,</span><br><span class="line">	   <span class="keyword">struct</span> poll_wqueues *wait, <span class="keyword">struct</span> timespec *end_time)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="keyword">for</span> (;;) {</span><br><span class="line">	<span class="keyword">struct</span> poll_list *walk;</span><br><span class="line">	<span class="keyword">bool</span> can_busy_loop = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* 遍历所有的pollfd */</span></span><br><span class="line">	<span class="keyword">for</span> (walk = <span class="built_in">list</span>; walk != <span class="literal">NULL</span>; walk = walk-&gt;next) {</span><br><span class="line">	    <span class="keyword">struct</span> pollfd * pfd, * pfd_end;</span><br><span class="line"></span><br><span class="line">	    pfd = walk-&gt;entries;</span><br><span class="line">	    pfd_end = pfd + walk-&gt;len;</span><br><span class="line">	    <span class="keyword">for</span> (; pfd != pfd_end; pfd++) {</span><br><span class="line">		<span class="keyword">if</span> (do_pollfd(pfd, pt, &amp;can_busy_loop,</span><br><span class="line">			  busy_flag)) {</span><br><span class="line">		    count++;</span><br><span class="line">		    pt-&gt;_qproc = <span class="literal">NULL</span>;</span><br><span class="line">		    <span class="comment">/* found something, stop busy polling */</span></span><br><span class="line">		    busy_flag = <span class="number">0</span>;</span><br><span class="line">		    can_busy_loop = <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line">	    }</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	pt-&gt;_qproc = <span class="literal">NULL</span>;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!poll_schedule_timeout(wait, TASK_INTERRUPTIBLE, to, slack))</span><br><span class="line">	    timed_out = <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+do_pollfd会调用到文件描述符所对应设备驱动程序中的poll函数指针，该函数相信很多人都知道怎么去写，但是为什么这样写，而且
+它具体做了哪些事情，这里在内核目录下找了ucma的poll实现：
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">ucma_poll</span><span class="params">(<span class="keyword">struct</span> file *filp, <span class="keyword">struct</span> poll_table_struct *wait)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="keyword">struct</span> ucma_file *file = filp-&gt;private_data;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> mask = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    poll_wait(filp, &amp;file-&gt;poll_wait, wait);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!list_empty(&amp;file-&gt;event_list))</span><br><span class="line">	mask = POLLIN | POLLRDNORM;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> mask;</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+poll_wait()虽然具有wait字样，但是并不会阻塞在这里，不然如果应用程序同时监控多个设备文件，每个poll函数都阻塞的话，也不会
+称为IO复用了。所以do_pollfd的真正作用有两个：
+</p>
+<ol class="org-ol">
+<li>利用poll_wait()将后续等待设备就绪的进程对应的等待队列项添加到驱动程序提供的等待队列头中。（仅在第一次轮循中使用，第一次轮循环结束后poll_table的_qproc被置为NULL）</li>
+<li>查询当前是否有关心的事件到来。</li>
+</ol>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">poll_wait</span><span class="params">(<span class="keyword">struct</span> file * filp, wait_queue_head_t * wait_address, poll_table *p)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="comment">/* 在poll_initwait中_qproc指向__pollwait()函数 */</span></span><br><span class="line">    <span class="keyword">if</span> (p &amp;&amp; p-&gt;_qproc &amp;&amp; wait_address)</span><br><span class="line">	p-&gt;_qproc(filp, wait_address, p);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+__pollwait()的实现详见上一小节，对于不同的进程当调用poll监测同一个设备文件描述符时都会有分配一个poll_table_entry项,并将等待队列项加入到相同的等待队列头中，都为
+驱动程序中所初始化的等待队列头。因此当设备就绪时，就会唤醒所有在该等待队列头中的所有等待队列项。
+</p>
+
+
+<p>
+若无事件发生，do_poll中的poll_schedule_timeout()会挂起当前进程，直到有事件（比如说POLLIN）到来时，可以通过wake_up_interruptible()"唤醒"处于设备驱动程序等待队列头的
+等待队列项，这时会调用之前__pollwait注册的回调函数pollwake函数，它通过container_of找到等待队列项对应的poll_table_entry项，最后调用__pollwake真正唤醒当前挂起的进程。
+</p>
+
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">pollwake</span><span class="params">(wait_queue_t *wait, <span class="keyword">unsigned</span> mode, <span class="keyword">int</span> sync, <span class="keyword">void</span> *key)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="keyword">struct</span> poll_table_entry *entry;</span><br><span class="line"></span><br><span class="line">    entry = container_of(wait, <span class="keyword">struct</span> poll_table_entry, wait);</span><br><span class="line">    <span class="keyword">if</span> (key &amp;&amp; !((<span class="keyword">unsigned</span> <span class="keyword">long</span>)key &amp; entry-&gt;key))</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> __pollwake(wait, mode, sync, key);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a21301" class="outline-3">
+<h3 id="org5a21301">清理并返回用户空间</h3>
+<div class="outline-text-3" id="text-org5a21301">
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">poll_freewait(&amp;table);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (walk = head; walk; walk = walk-&gt;next) {</span><br><span class="line">    <span class="keyword">struct</span> pollfd *fds = walk-&gt;entries;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; walk-&gt;len; j++, ufds++)</span><br><span class="line">	<span class="comment">/* 拷贝回用户空间 */</span></span><br><span class="line">	<span class="keyword">if</span> (__put_user(fds[j].revents, &amp;ufds-&gt;revents))</span><br><span class="line">	    <span class="keyword">goto</span> out_fds;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">err = fdcount;</span><br><span class="line">out_fds:</span><br><span class="line">walk = head-&gt;next;</span><br><span class="line"><span class="keyword">while</span> (walk) {</span><br><span class="line">    <span class="keyword">struct</span> poll_list *pos = walk;</span><br><span class="line">    walk = walk-&gt;next;</span><br><span class="line">    kfree(pos);</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<br><div style="font-size: 14px;font-style: italic;filter: Alpha(Opacity=50);text-align: center;padding: 5px;line-height: 20px;border-bottom: 1px dotted;"> Last Updated 2017-09-06 Wed 07:40 with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.1.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 9.0.10)</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;
+在上层应用中使用系统调用，最终都会调用到内核中提供的接口，对于 &lt;code&gt;poll&lt;/code&gt; ，与之相对应的即为 &lt;code&gt;sys_poll&lt;/code&gt; 函数。
+&lt;/p&gt;
+
+&lt;div id=&quot;outline-container-orgb5a32b9&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgb5a32b9&quot;&gt;sys_poll&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgb5a32b9&quot;&gt;
+&lt;p&gt;
+sys_poll函数的实现在内核中的 &lt;a href=&quot;http://lxr.free-electrons.com/source/fs/select.c#L971&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;fs/select.c&lt;/a&gt; 文件中:
+&lt;/p&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;SYSCALL_DEFINE3(poll, &lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; pollfd __user *, ufds, &lt;span class=&quot;keyword&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;, nfds,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;, timeout_msecs)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;{&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;/* 在这里调用do_sys_poll */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ret = do_sys_poll(ufds, nfds, to);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;}&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.freereaper.com/categories/Linux/"/>
+    
+    
+      <category term="Kernel Driver" scheme="http://www.freereaper.com/tags/Kernel-Driver/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从markdow到org的迁移</title>
+    <link href="http://www.freereaper.com/blog/2017-02-16-2017-02-16-org-blog.html"/>
+    <id>http://www.freereaper.com/blog/2017-02-16-2017-02-16-org-blog.html</id>
+    <published>2017-02-16T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[
+
+<p>
+这是一篇来自org+hexo的测试文章，依然采用travis进行持续集成，部署到github和coding.net。
+</p>
+
+<p>
+<a id="more"></a>
+</p>
+
+<p id="div-border-left-purple"> 作为vim党，依然还是中了emacs的毒，<span id="inline-yellow">org mode</span>确实很好用有没有 ~~!</p>
+
+<div id="outline-container-org4c80120" class="outline-2">
+<h2 id="org4c80120">行内代码</h2>
+<div class="outline-text-2" id="text-org4c80120">
+<p>
+<code>sudo apt-get install ruby</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf54154f" class="outline-2">
+<h2 id="orgf54154f">代码块</h2>
+<div class="outline-text-2" id="text-orgf54154f">
+<div class="org-src-container">
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">char</span> argc, <span class="keyword">char</span> **argv)</span></span><br><span class="line"></span>{</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"www.freereaper.com\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org16b95aa" class="outline-2">
+<h2 id="org16b95aa">表格</h2>
+<div class="outline-text-2" id="text-org16b95aa">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="org-right">
+
+<col class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">one</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">two</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">Three</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">four</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-orgcce0463" class="outline-2">
+<h2 id="orgcce0463">引用</h2>
+<div class="outline-text-2" id="text-orgcce0463">
+<blockquote>
+<p>
+www.freereaper.com
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org96f55f6" class="outline-2">
+<h2 id="org96f55f6">列表</h2>
+<div class="outline-text-2" id="text-org96f55f6">
+<ul class="org-ul">
+<li>vim</li>
+<li>emacs</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5b8b3d2" class="outline-2">
+<h2 id="org5b8b3d2">文字处理</h2>
+<div class="outline-text-2" id="text-org5b8b3d2">
+<p>
+<del>stroke line</del>
+</p>
+</div>
+</div>
+
+<br><div style="font-size: 14px;font-style: italic;filter: Alpha(Opacity=50);text-align: center;padding: 5px;line-height: 20px;border-bottom: 1px dotted;"> Last Updated 2017-09-06 Wed 07:40 with <a href="http://www.gnu.org/software/emacs/" target="_blank" rel="external">Emacs</a> 25.1.1 (<a href="http://orgmode.org" target="_blank" rel="external">Org</a> mode 9.0.10)</div>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;
+这是一篇来自org+hexo的测试文章，依然采用travis进行持续集成，部署到github和coding.net。
+&lt;/p&gt;
+
+&lt;p&gt;
+    
+    </summary>
+    
+      <category term="org" scheme="http://www.freereaper.com/categories/org/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>python元类浅析(第二季)</title>
+    <link href="http://www.freereaper.com/blog/2016-11-20-python-metaclassII.html"/>
+    <id>http://www.freereaper.com/blog/2016-11-20-python-metaclassII.html</id>
+    <published>2016-11-20T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<p id="div-border-top-blue">上一篇文章中已经讲述了什么是metaclass，metaclass类似创建类的模板，继承自type类，
+通过重写<span id="inline-green">__new__</span>方法控制类的创建行为。</p>
+
+
+<a id="more"></a>
+<h3 id="metacalss原理"><a href="#metacalss原理" class="headerlink" title="metacalss原理"></a>metacalss原理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MetaClass</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"Allocating memory for class"</span>, name</div><div class="line">        <span class="keyword">print</span> cls</div><div class="line">        <span class="keyword">print</span> bases</div><div class="line">        <span class="keyword">print</span> attrs</div><div class="line">        <span class="keyword">return</span> super(MetaClass, cls).__new__(cls, name, bases, attrs)</div><div class="line">		</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">"initializing class"</span>, name</div><div class="line">        <span class="keyword">print</span> cls</div><div class="line">        <span class="keyword">print</span> bases</div><div class="line">        <span class="keyword">print</span> attrs</div><div class="line">        <span class="keyword">return</span> super(MetaClass, cls).__init__(name, bases, attrs)</div><div class="line">		</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(object)</span>:</span></div><div class="line">    __metaclass__ = MetaClass</div><div class="line">	</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">(self, param)</span>:</span></div><div class="line">        <span class="keyword">print</span> param</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">Allocating memory for class MyClass</span></div><div class="line"><span class="string">&lt;class '__main__.MetaClass'&gt;</span></div><div class="line"><span class="string">(&lt;type 'object'&gt;,)</span></div><div class="line"><span class="string">&#123;'fun': &lt;function fun at 0x02E19BB0&gt;, '__module__': '__main__', '__metaclass__': &lt;class '__main__.MetaClass'&gt;&#125;</span></div><div class="line"><span class="string">initializing class MyClass</span></div><div class="line"><span class="string">&lt;class '__main__.MyClass'&gt;</span></div><div class="line"><span class="string">(&lt;type 'object'&gt;,)</span></div><div class="line"><span class="string">&#123;'fun': &lt;function fun at 0x02E19BB0&gt;, '__module__': '__main__', '__metaclass__': &lt;class '__main__.MetaClass'&gt;&#125;</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>cls: 将要创建的类。</li>
+<li>name: 类的名字，也就是通常使用<strong>name</strong>获取的属性。</li>
+<li>bases: 基类。</li>
+<li>attrs: 属性字典，可以是类变量，也可以是类函数。</li>
+</ul>
+<p>在<code>MyClass</code>定义中通过指定<code>__metaclass__ = MetaClass</code>来告诉python解释器，在创建<code>MyClass</code>类时，
+要通过<code>MetaClass</code>来创建，而不再使用内置的<code>type</code>。这样在<code>MetaClass.__new__()</code>方法中即可对类的定义进行修改，比如加上新的方法或者
+属性。</p>
+<h3 id="metaclass使用"><a href="#metaclass使用" class="headerlink" title="metaclass使用"></a>metaclass使用</h3><p>在采用<code>__metaclass__</code>创建类的时候，默认的查找顺序如下（摘自官方文档）：</p>
+<blockquote>
+<p>If dict[‘<strong>metaclass</strong>‘] exists, it is used.
+Otherwise, if there is at least one base class, its metaclass is used (this looks for a <strong>class</strong> attribute first and if not found, uses its type).
+Otherwise, if a global variable named <strong>metaclass</strong> exists, it is used.
+Otherwise, the old-style, classic metaclass (types.ClassType) is used.</p>
+</blockquote>
+<h4 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h4><p><span id="inline-blue">委托(delegate)</span>是设计模式中常用的一种方法，通常利用委托类为需要委托的方法
+去定义一个方法，以下是摘自网上的例子：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImmutableList</span><span class="params">(object)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, delegate)</span>:</span>  </div><div class="line">        self.delegate = delegate  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, i)</span>:</span>  </div><div class="line">        <span class="keyword">return</span> self.delegate.__getitem__(i)  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getslice__</span><span class="params">(self, i, j)</span>:</span>  </div><div class="line">        <span class="keyword">return</span> self.delegate.__getslice__(i, j)  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span>  </div><div class="line">        <span class="keyword">return</span> self.delegate.__len(self)  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(self, v)</span>:</span>  </div><div class="line">        <span class="keyword">return</span> self.delegate.index(v)</div></pre></td></tr></table></figure></p>
+<p>以上是比较常规的做法，而使用元类的实现就显得格外简单和优雅：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DelegateMetaClass</span><span class="params">(type)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span>  </div><div class="line">        methods = attrs.pop(<span class="string">'delegated_methods'</span>, ())   </div><div class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> methods:  </div><div class="line">            <span class="function"><span class="keyword">def</span> <span class="title">make_func</span><span class="params">(m)</span>:</span>  </div><div class="line">                <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self, *args, **kwargs)</span>:</span>  </div><div class="line">                    <span class="keyword">return</span> getattr(self.delegate, m)(*args, **kwargs)  </div><div class="line">                <span class="keyword">return</span> func  </div><div class="line">  </div><div class="line">            attrs[m] = make_func(m)  </div><div class="line">        <span class="keyword">return</span> super(DelegateMetaClass, cls).__new__(cls, name, bases, attrs)  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Delegate</span><span class="params">(object)</span>:</span>  </div><div class="line">    __metaclass__ = DelegateMetaClass  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, delegate)</span>:</span>  </div><div class="line">        self.delegate = delegate  </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImmutableList</span><span class="params">(Delegate)</span>:</span>  </div><div class="line">    delegated_methods = ( <span class="string">'__contains__'</span>, <span class="string">'__eq__'</span>, <span class="string">'__getitem__'</span>, <span class="string">'__getslice__'</span>,   </div><div class="line">                         <span class="string">'__str__'</span>, <span class="string">'__len__'</span>, <span class="string">'index'</span>, <span class="string">'count'</span>)  </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImmutableDict</span><span class="params">(Delegate)</span>:</span>  </div><div class="line">    delegated_methods = (<span class="string">'__contains__'</span>, <span class="string">'__getitem__'</span>, <span class="string">'__eq__'</span>, <span class="string">'__len__'</span>, <span class="string">'__str__'</span>,   </div><div class="line">            <span class="string">'get'</span>, <span class="string">'has_key'</span>, <span class="string">'items'</span>, <span class="string">'iteritems'</span>, <span class="string">'iterkeys'</span>, <span class="string">'itervalues'</span>, <span class="string">'keys'</span>, <span class="string">'values'</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Field</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fname, ftype)</span>:</span></div><div class="line">        self.fname = fname</div><div class="line">        self.ftype = ftype</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="string">'&#123;%s: (%s, %s)&#125;'</span> % (self.__class__.__name__, self.fname, self.ftype)   </div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringField</span><span class="params">(Field)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fname)</span>:</span></div><div class="line">        super(StringField, self).__init__(fname, <span class="string">'varchar(100)'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntegerField</span><span class="params">(Field)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, fname)</span>:</span></div><div class="line">        super(IntegerField, self).__init__(fname, <span class="string">'bigint'</span>)</div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ModelMetaclass</span><span class="params">(type)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, name, bases, attrs)</span>:</span></div><div class="line">        <span class="keyword">print</span> cls</div><div class="line">        <span class="keyword">print</span> <span class="string">"creating for:"</span>, name</div><div class="line">        <span class="keyword">if</span> name == <span class="string">"Model"</span>:</div><div class="line">            attrs[<span class="string">'author'</span>] = <span class="string">"reaper"</span></div><div class="line">            <span class="keyword">return</span> super(ModelMetaclass, cls).__new__(cls, name, bases, attrs)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            mapping = &#123;&#125;</div><div class="line">            <span class="keyword">print</span> <span class="string">"Create Model for:"</span>, name</div><div class="line">            <span class="keyword">for</span> k, v <span class="keyword">in</span> attrs.items():</div><div class="line">                <span class="keyword">if</span> isinstance(v, Field):</div><div class="line">                    <span class="keyword">print</span> <span class="string">"mapping %s with %s"</span> %(k, v)</div><div class="line">                    mapping[k] = v</div><div class="line">            attrs[<span class="string">'_table'</span>] = name </div><div class="line">            attrs[<span class="string">'_mapping'</span>] = mapping </div><div class="line">            <span class="keyword">return</span> type.__new__(cls, name, bases, attrs)</div><div class="line"></div><div class="line">    </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span><span class="params">(dict)</span>:</span></div><div class="line">    __metaclass__ = ModelMetaclass</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> kwargs.keys():</div><div class="line">            <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> self.__class__._mapping.keys():</div><div class="line">                <span class="keyword">print</span> <span class="string">"Key '%s' is not defined for %s"</span> %(key, self.__class__.__name__)</div><div class="line">                <span class="keyword">return</span> </div><div class="line"></div><div class="line">        super(Model, self).__init__(**kwargs)</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self)</span>:</span></div><div class="line">        fields = []</div><div class="line">        params = []</div><div class="line">        args = []</div><div class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> self.__class__._mapping.items():</div><div class="line">            fields.append(k)</div><div class="line">            params.append(<span class="string">"'&#123;0&#125;'"</span>.format(self[k]))</div><div class="line">        sql = <span class="string">'insert into %s (%s) values (%s)'</span> % (self.__class__._table, <span class="string">','</span>.join(fields), <span class="string">','</span>.join(params))</div><div class="line">        <span class="keyword">print</span> <span class="string">'SQL: %s'</span> %sql </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(Model)</span>:</span></div><div class="line">    id = IntegerField(<span class="string">'id_c'</span>)</div><div class="line">    name = StringField(<span class="string">'username_c'</span>)</div><div class="line">    email = StringField(<span class="string">'email_c'</span>)</div><div class="line"></div><div class="line"><span class="keyword">print</span> Student.author</div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">"-------------------------------------------------"</span></div><div class="line"><span class="keyword">print</span> Student._table</div><div class="line"><span class="keyword">print</span> Student._mapping</div><div class="line"><span class="keyword">print</span> <span class="string">"-------------------------------------------------"</span></div><div class="line">s1 = Student(id = <span class="number">1</span>, name = <span class="string">"Wilber"</span>, email = <span class="string">"wilber@sh.com"</span>)</div><div class="line"><span class="keyword">print</span> s1.id</div><div class="line">s1.save()</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p id=&quot;div-border-top-blue&quot;&gt;上一篇文章中已经讲述了什么是metaclass，metaclass类似创建类的模板，继承自type类，
+通过重写&lt;span id=&quot;inline-green&quot;&gt;__new__&lt;/span&gt;方法控制类的创建行为。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://www.freereaper.com/tags/python/"/>
+    
+      <category term="metaclass" scheme="http://www.freereaper.com/tags/metaclass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>YouCompleteMe笔记</title>
+    <link href="http://www.freereaper.com/blog/2016-11-11-YCM.html"/>
+    <id>http://www.freereaper.com/blog/2016-11-11-YCM.html</id>
+    <published>2016-11-11T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Build-Vim8-From-Source"><a href="#Build-Vim8-From-Source" class="headerlink" title="Build Vim8 From Source"></a>Build Vim8 From Source</h3><hr>
+<ul>
+<li>卸载旧版本的vim</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove vim vim-runtime gvim</div><div class="line">sudo apt-get remove vim-tiny vim-common vim-gui-common vim-nox</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<ul>
+<li>安装依赖包</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \</div><div class="line">    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \</div><div class="line">    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \</div><div class="line">    python3-dev ruby-dev lua5.1 lua5.1-dev luajit libluajit-5.1-dev \</div><div class="line">    libperl-dev git</div></pre></td></tr></table></figure>
+<ul>
+<li>编译vim8.0</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">git config --global http.proxy <span class="string">"socks5://127.0.0.1:1080"</span></div><div class="line">git config --global https.proxy <span class="string">"socks5://127.0.0.1:1080"</span></div><div class="line"><span class="built_in">cd</span> ~/download</div><div class="line">git <span class="built_in">clone</span> https://github.com/vim/vim.git vim</div><div class="line"><span class="built_in">cd</span> vim</div><div class="line"></div><div class="line">./configure --with-compiledby=<span class="string">"freereaper"</span> \</div><div class="line">            --with-features=huge \</div><div class="line">            --<span class="built_in">enable</span>-multibyte \</div><div class="line">            --<span class="built_in">enable</span>-perlinterp=yes \</div><div class="line">            --<span class="built_in">enable</span>-rubyinterp=yes \</div><div class="line">            --<span class="built_in">enable</span>-pythoninterp=yes \</div><div class="line">            --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \</div><div class="line">            --<span class="built_in">enable</span>-python3interp=yes \</div><div class="line">            --with-python3-config-dir=/usr/lib/python3.4/config-3.4m-x86_64-linux-gnu \</div><div class="line">            --with-luajit --<span class="built_in">enable</span>-luainterp=yes \</div><div class="line">            --with-lua-prefix=/usr/include/lua5.1 \</div><div class="line">            --<span class="built_in">enable</span>-gui=gnome2 --<span class="built_in">enable</span>-gnome-check --<span class="built_in">enable</span>-cscope \</div><div class="line">            --prefix=/usr --<span class="built_in">enable</span>-fail-if-missing</div><div class="line">make VIMRUNTIMEDIR=/usr/share/vim/vim80</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<p>其中python-config dir可以通过pytho-config –configdir查看</p>
+<h3 id="编译YCM"><a href="#编译YCM" class="headerlink" title="编译YCM"></a>编译YCM</h3><hr>
+<p>通过plug工具安装YouCompleteMe插件，建议走代理。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global http.proxy <span class="string">"socks5://127.0.0.1:1080"</span></div><div class="line">git config --global https.proxy <span class="string">"socks5://127.0.0.1:1080"</span></div></pre></td></tr></table></figure>
+<p>下载Pre_Buillt Clang Binaries，按照以下步骤编译ycm_core.so</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">wget http://llvm.org/releases/3.9.0/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz -O clang+llvm.tar.xz</div><div class="line">xz -d clang+llvm.tar.xz</div><div class="line">tar -xvf clang+llvm.tar -C ~/ycm_temp/</div><div class="line">mkdir -p ~/ycm_build</div><div class="line"><span class="built_in">cd</span> ~/ycm_build</div><div class="line">cmake -G <span class="string">"Unix Makefiles"</span> -DPATH_TO_LLVM_ROOT=~/ycm_temp/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04 . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp</div><div class="line">cmake --build . --target ycm_core</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Build-Vim8-From-Source&quot;&gt;&lt;a href=&quot;#Build-Vim8-From-Source&quot; class=&quot;headerlink&quot; title=&quot;Build Vim8 From Source&quot;&gt;&lt;/a&gt;Build Vim8 From Source&lt;/h3&gt;&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;卸载旧版本的vim&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sudo apt-get remove vim vim-runtime gvim&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;sudo apt-get remove vim-tiny vim-common vim-gui-common vim-nox&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://www.freereaper.com/tags/python/"/>
+    
+      <category term="metaclass" scheme="http://www.freereaper.com/tags/metaclass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python元类浅析(第一季)</title>
+    <link href="http://www.freereaper.com/blog/2016-11-11-python-metaclass.html"/>
+    <id>http://www.freereaper.com/blog/2016-11-11-python-metaclass.html</id>
+    <published>2016-11-11T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="类也是对象"><a href="#类也是对象" class="headerlink" title="类也是对象"></a>类也是对象</h2><p>在介绍元类之前，先来了解python中的类是什么。python中的类和大多数编程语言一样，
+就是用来描述如何生成一个对象的代码片段。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObjectCreator</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">myObj = ObjectCreator()</div><div class="line"><span class="keyword">print</span> myObj</div><div class="line"></div><div class="line"><span class="comment">#-----------console output-------------</span></div><div class="line">&lt;__main__.ObjectCreator object at <span class="number">0x02BE1810</span>&gt;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>在python中，一切皆对象，类同样也是一种对象。<code>ObjectCreator就是内存中的一个对象，这个对象（类）自身
+拥有创建对象（类实例）的能力，而这就是为什么它是一个类的原因。</code>但是，因为它本质依然是一个对象，因此也
+就具有对象的行为特性：  </p>
+<ul>
+<li>可以被变量引用</li>
+<li>可以拷贝</li>
+<li>可以修改属性</li>
+<li>可以作为函数参数进行传递</li>
+</ul>
+<p>e.g.:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># you can print a class because it's an object</span></div><div class="line">print(ObjectCreator) </div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">ObjectCreator</span>'&gt;</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class"> # <span class="title">you</span> <span class="title">can</span> <span class="title">pass</span> <span class="title">a</span> <span class="title">class</span> <span class="title">as</span> <span class="title">a</span> <span class="title">parameter</span></span></div><div class="line"><span class="class"><span class="title">def</span> <span class="title">echo</span><span class="params">(o)</span>:</span></div><div class="line">    print(o)</div><div class="line"></div><div class="line">echo(ObjectCreator) </div><div class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">__main__</span>.<span class="title">ObjectCreator</span>'&gt;</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class"># <span class="title">you</span> <span class="title">can</span> <span class="title">add</span> <span class="title">attributes</span> <span class="title">to</span> <span class="title">a</span> <span class="title">class</span></span></div><div class="line"><span class="class"><span class="title">print</span><span class="params">(hasattr<span class="params">(ObjectCreator, <span class="string">'new_attribute'</span>)</span>)</span></span></div><div class="line"><span class="class"><span class="title">False</span></span></div><div class="line"><span class="class"></span></div><div class="line">ObjectCreator.new_attribute = 'foo' </div><div class="line">print(hasattr(ObjectCreator, <span class="string">'new_attribute'</span>))</div><div class="line"><span class="keyword">True</span></div><div class="line">print(ObjectCreator.new_attribute)</div><div class="line">foo</div><div class="line"></div><div class="line"><span class="comment"># you can assign a class to a variable</span></div><div class="line">ObjectCreatorMirror = ObjectCreator </div><div class="line">print(ObjectCreatorMirror.new_attribute)</div><div class="line">foo</div><div class="line">print(ObjectCreatorMirror())</div><div class="line">&lt;__main__.ObjectCreator object at <span class="number">0x8997b4c</span>&gt;</div></pre></td></tr></table></figure>
+<h2 id="动态创建类"><a href="#动态创建类" class="headerlink" title="动态创建类"></a>动态创建类</h2><p>当使用<code>class</code>关键字时，python能够自动的创建类。但就像python中其它大部分设计一样，
+它也提供了能够手动创建类的方法。</p>
+<p>在python中<code>type</code> 除了能够返回对象的类型，它还具有动态创建类的能力。<code>type</code>可以接受一
+个类的描述作为参数，然后返回一个类。</p>
+<p>（我知道，根据传入参数的不同，同一个函数拥有两种完全不同的用法是一件很傻的事情，
+但这在Python中是为了保持向后兼容性。）</p>
+<p><code>type</code>创建类的用法如下：
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">type(类名， 父类元祖(可以为空)，属性字典)</div></pre></td></tr></table></figure></p>
+<p>以下两种方式都可以等价地创建出MyClass类：</p>
+<ul>
+<li><p>使用class关键字</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(object)</span>:</span></div><div class="line">    author = <span class="string">"reaper"</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">say_author</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> self.author</div><div class="line"> </div><div class="line">my_class = MyClass()</div><div class="line"><span class="keyword">print</span> my_class.author</div><div class="line">my_class.say_author()</div><div class="line"> </div><div class="line">--------------------console output------------------</div><div class="line">reaper</div><div class="line">reaper</div><div class="line">`</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用type</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_author</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">print</span> self.author</div><div class="line">MyClass = type(<span class="string">"MyClass"</span>, (), &#123;<span class="string">'author'</span>:  <span class="string">'reaper'</span>,  <span class="string">'say_author'</span>: say_author&#125;</div><div class="line">my_class = MyClass()</div><div class="line"><span class="keyword">print</span> my_class.author</div><div class="line">my_class.say_author()</div><div class="line"> </div><div class="line">--------------------console output------------------</div><div class="line">reaper</div><div class="line">reaper</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>你可以看到，在Python中，类也是对象，你可以动态的创建类。这就是当你使用关键字<code>class</code>时Python在
+幕后做的事情，而这就是通过元类来实现的。</p>
+<h2 id="什么是元类"><a href="#什么是元类" class="headerlink" title="什么是元类"></a>什么是元类</h2><p> 什么是元类？元类就是用来创建类的“东西“，元类就是类的类，直观来说就是，元类的实例就是类。
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#元类的instance就是类</span></div><div class="line">MyClass = MetaClass()</div><div class="line"> </div><div class="line"><span class="comment">#类的instance就是类实例，好吧，有点绕~~！</span></div><div class="line">MyObject = MyClass()</div></pre></td></tr></table></figure></p>
+<p>在上一节中，已经讲述了<code>type</code>可以动态地创建类。然而，<code>type</code>其实就是一个元类。<code>type</code>元类是python
+幕后用来创造所有类的元类。</p>
+<p>在python中，<code>str</code>是用来创造字符串对象的类，<code>int</code>是用来创造整形对象的类，<code>type</code>就是用来创造类对象的
+类。正如之前所说，python中的一切都是对象，包括整形，字符串，函数和类，它们最终都是通过元类创造出
+来的。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">age = <span class="number">32</span></div><div class="line">age.__class__</div><div class="line">age.__class__.__class__</div><div class="line"></div><div class="line">name = <span class="string">"reaper"</span></div><div class="line">name.__class__</div><div class="line">name.__class__.__class__</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line">my_class = MyClass()</div><div class="line">my_class.__class__</div><div class="line">my_class.__class__.__class__</div></pre></td></tr></table></figure></p>
+<p> 可以看出，最后的<code>__class__</code>属性都是<code>&lt;type &#39;type&#39;&gt;</code>，python中使用<code>type</code>作为内置的元类。下一季将讲述
+如何定制元类，以及如何使用元类。</p>
+<p>Refs: <a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python" target="_blank" rel="external">stackoverflow</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;类也是对象&quot;&gt;&lt;a href=&quot;#类也是对象&quot; class=&quot;headerlink&quot; title=&quot;类也是对象&quot;&gt;&lt;/a&gt;类也是对象&lt;/h2&gt;&lt;p&gt;在介绍元类之前，先来了解python中的类是什么。python中的类和大多数编程语言一样，
+就是用来描述如何生成一个对象的代码片段。
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ObjectCreator&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(object)&lt;/span&gt;:&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;pass&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;myObj = ObjectCreator()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; myObj&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#-----------console output-------------&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;__main__.ObjectCreator object at &lt;span class=&quot;number&quot;&gt;0x02BE1810&lt;/span&gt;&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://www.freereaper.com/tags/python/"/>
+    
+      <category term="metaclass" scheme="http://www.freereaper.com/tags/metaclass/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用pyenv和virtualenv定制python环境</title>
+    <link href="http://www.freereaper.com/blog/2016-11-07-pyenv.html"/>
+    <id>http://www.freereaper.com/blog/2016-11-07-pyenv.html</id>
+    <published>2016-11-07T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote class="blockquote-center"><p><a href="https://github.com/yyuu/pyenv" target="_blank" rel="external">pyenv</a>提供管理和切换不同python版本的功能。</p>
+<p><a href="https://github.com/yyuu/pyenv-virtualenv" target="_blank" rel="external">pyenv-virtualenv</a>属于pyenv的插件，可以定制相互隔离的python开发环境。</p>
+<p>两者可以实现多版本，多环境的控制，可以为每个项目定制完全隔离的python运行环境。</p>
+</blockquote>
+<h2 id="安装pyenv和pyenv-virtualenv"><a href="#安装pyenv和pyenv-virtualenv" class="headerlink" title="安装pyenv和pyenv-virtualenv"></a>安装pyenv和pyenv-virtualenv</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> bootstrap-pyenv &#123;</div><div class="line">    __clone <span class="string">'https://github.com/yyuu/pyenv.git'</span> <span class="string">'.pyenv'</span></div><div class="line">    <span class="keyword">if</span> [ ! -d <span class="string">"<span class="variable">$HOME</span>/.pyenv/plugins/pyenv-virtualenv"</span> ]; <span class="keyword">then</span></div><div class="line">        mkdir -p <span class="string">"<span class="variable">$HOME</span>/.pyenv/plugins"</span></div><div class="line">        git <span class="built_in">clone</span> https://github.com/yyuu/pyenv-virtualenv.git <span class="variable">$HOME</span>/.pyenv/plugins/pyenv-virtualenv</div><div class="line">    <span class="keyword">fi</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中__clone具体实现在<a href="https://github.com/freereaper/dotfiles/blob/dev/init.zsh" target="_blank" rel="external">init.zsh</a>。</p>
+<a id="more"></a>
+<p>添加<code>pyenv init</code>和<code>pyenv virtualenv-init</code>到.zshrc中：
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># file : .zshrc</span></div><div class="line"><span class="comment"># pyenv cfg</span></div><div class="line"><span class="built_in">export</span> PYENV_ROOT=<span class="string">"<span class="variable">$&#123;HOME&#125;</span>/.pyenv"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ -d <span class="string">"<span class="variable">$&#123;PYENV_ROOT&#125;</span>"</span> ]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$&#123;PYENV_ROOT&#125;</span>/bin:<span class="variable">$&#123;PATH&#125;</span>"</span></div><div class="line">    <span class="built_in">eval</span> <span class="string">"<span class="variable">$(pyenv init -)</span>"</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> [ -d <span class="string">"<span class="variable">$&#123;PYENV_ROOT&#125;</span>/plugins/pyenv-virtualenv"</span> ]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">eval</span> <span class="string">"<span class="variable">$(pyenv virtualenv-init -)</span>"</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="built_in">export</span> PYENV_VIRTUALENV_DISABLE_PROMPT=1</div></pre></td></tr></table></figure></p>
+<h2 id="pyenv的使用"><a href="#pyenv的使用" class="headerlink" title="pyenv的使用"></a>pyenv的使用</h2><h3 id="安装和卸载python"><a href="#安装和卸载python" class="headerlink" title="安装和卸载python"></a>安装和卸载python</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#查看可以安装的python版本</span></div><div class="line">pyenv install --list</div><div class="line"></div><div class="line"><span class="comment">#安装版本3.5.1，系统会从python官网下载安装对应的python版本。</span></div><div class="line"><span class="comment">#这里下载会比较慢，可以从后面介绍的两种方法安装。</span></div><div class="line">pyenv install 3.5.1</div><div class="line"></div><div class="line"><span class="comment">#更新，为所有安装的可执行文件(~/.pyenv/versions/*/bin/*)c创建shims,</span></div><div class="line"><span class="comment">#因此，每当你增删python版本或带有可执行文件的包(如pip)以后，都应该执行</span></div><div class="line"><span class="comment">#一次本命令</span></div><div class="line">pyenv <span class="built_in">rehash</span></div><div class="line"></div><div class="line"><span class="comment">#查看系统已经安装的python版本</span></div><div class="line">pyenv versions</div><div class="line"></div><div class="line"><span class="comment">#卸载某个版本的python</span></div><div class="line">pyenv uninstall 3.5.1</div></pre></td></tr></table></figure>
+<p>可选安装方法：</p>
+<ul>
+<li><p>直接下载对应的版本压缩包,例如Python-3.5.1.tgz，拷贝至<code>~/.pyenv/cache/</code>中，
+如果没有cache目录，则手动创建，并修改文件名为Python-3.5.1.tar.gz。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mv Python-3.5.1.tgz Python-3.5.1.tar.gz</div><div class="line">pyenv install 3.5.1 -v</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用国内镜像的pyenv源安装。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PYTHON_BUILD_MIRROR_URL=<span class="string">"http://pyenv.qiniudn.com/pythons/"</span></div><div class="line">pyenv install 3.5.1 -v</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="pyenv与virtualenv"><a href="#pyenv与virtualenv" class="headerlink" title="pyenv与virtualenv"></a>pyenv与virtualenv</h3><p><code>pyenv global 3.5.1</code>切换当前python版本为3.5.1，<code>pyenv global system</code>切换回系统版本。</p>
+<p>当系统安装了多个python版本，为了保持系统环境足够干净，可以使用<code>pyenv virtualenv</code>来创建虚拟python环境。</p>
+<p>创建一个以python3.5.1为解释器的虚拟环境可以通过以下命令实现:
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pyenv virtualenv 3.5.1 env351</div></pre></td></tr></table></figure></p>
+<p>此时会在<code>~/.pyenv/versions/</code>目录下创建一个env351的目录，通过<code>pyenv versions</code>即可看到当前创建的虚拟环境。</p>
+<p>为项目单独配置一个虚拟的python运行环境：
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建名为project的虚拟环境</span></div><div class="line">pyenv virtualenv 3.5.1 project</div><div class="line"></div><div class="line"><span class="comment">#设置进入project目录自动切换为project环境。</span></div><div class="line"><span class="comment">#会生成.python_versions文件</span></div><div class="line"><span class="built_in">cd</span> project_root</div><div class="line">pyenv <span class="built_in">local</span> project</div><div class="line"></div><div class="line"><span class="comment">#安装对应的lib，所有的lib都会被安装到虚拟环境中,不会破坏系统本身的环境。</span></div><div class="line">pip install ...</div></pre></td></tr></table></figure></p>
+<p>卸载创建成功的虚拟环境：
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pyenv uninstall env351</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote class=&quot;blockquote-center&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/yyuu/pyenv&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pyenv&lt;/a&gt;提供管理和切换不同python版本的功能。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yyuu/pyenv-virtualenv&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pyenv-virtualenv&lt;/a&gt;属于pyenv的插件，可以定制相互隔离的python开发环境。&lt;/p&gt;
+&lt;p&gt;两者可以实现多版本，多环境的控制，可以为每个项目定制完全隔离的python运行环境。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;安装pyenv和pyenv-virtualenv&quot;&gt;&lt;a href=&quot;#安装pyenv和pyenv-virtualenv&quot; class=&quot;headerlink&quot; title=&quot;安装pyenv和pyenv-virtualenv&quot;&gt;&lt;/a&gt;安装pyenv和pyenv-virtualenv&lt;/h2&gt;&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; bootstrap-pyenv &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    __clone &lt;span class=&quot;string&quot;&gt;&#39;https://github.com/yyuu/pyenv.git&#39;&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;.pyenv&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; [ ! -d &lt;span class=&quot;string&quot;&gt;&quot;&lt;span class=&quot;variable&quot;&gt;$HOME&lt;/span&gt;/.pyenv/plugins/pyenv-virtualenv&quot;&lt;/span&gt; ]; &lt;span class=&quot;keyword&quot;&gt;then&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        mkdir -p &lt;span class=&quot;string&quot;&gt;&quot;&lt;span class=&quot;variable&quot;&gt;$HOME&lt;/span&gt;/.pyenv/plugins&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/yyuu/pyenv-virtualenv.git &lt;span class=&quot;variable&quot;&gt;$HOME&lt;/span&gt;/.pyenv/plugins/pyenv-virtualenv&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;fi&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其中__clone具体实现在&lt;a href=&quot;https://github.com/freereaper/dotfiles/blob/dev/init.zsh&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;init.zsh&lt;/a&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="http://www.freereaper.com/tags/python/"/>
+    
+      <category term="shell" scheme="http://www.freereaper.com/tags/shell/"/>
+    
+      <category term="pyenv" scheme="http://www.freereaper.com/tags/pyenv/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>热爱微小的改变</title>
+    <link href="http://www.freereaper.com/blog/2016-11-02-love_change.html"/>
+    <id>http://www.freereaper.com/blog/2016-11-02-love_change.html</id>
+    <published>2016-11-02T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://7xktwz.com1.z0.glb.clouddn.com/smile.jpg" alt="smile">
+<br>
+当你有着强烈的情绪时，可能是因为你要明哲保身。你不愿冒险因为你害怕被拒绝、害怕失败、害怕自己hold不住。真的，试想下如果你彻底的失败了，
+甚至在完全陌生的人面前流泪你会怎么做？也许你不相信你会采取合理的风险。也许你曾经打破常规去挑战自我的极限，但是结果却并不令你满意。
+但卖掉你所有的财产，搬去墨西哥并非我今天所谈论的改变类型。
+<a id="more"></a></p>
+<p>也许你会害怕改变，虽然你也不知道其中的原因。一想到沉溺于同样的地方遇见同样的人，遵循例行的生活是一种最不愉快的体验。</p>
+<p>的确如此，你每天在同一时间起床之后重复同样的行为。你吃着一成不变的食物去同一家电影院。你约会同样的朋友甚至在每周同一时间。
+很多情况下常规和结构化的模式有助于情绪管理。虽然可预测性是你行为方式的一部分，但如果这部分所占比例太高，则会挤压你生活中的乐趣。</p>
+<p>探索新体验是增加幸福感的方式之一。新体验并不需要太大的改变。或许你可以探索下你所在城市的自己不熟悉的地方，品尝些新食物，做一道新菜，
+阅读一些你平时并非爱好的杂志，或者去参加一些你从未体验过的活动。你也可以走进一家专卖亚洲食品的商店，或者到公园里参加一些游戏活动。
+新体验能够培养兴趣或者参与甚至取代你之前熟知的意识。当在熟知的范围内发生适当的改变，会刺激你的活力和幸福感。你看孩子们始终拥有对
+世界的好奇心和迷恋感，因为对于他们来说什么都是新的。所以当你寻求新体验的时候你也能保持一份好奇感。</p>
+<p>当你想做一些全新的不同的事情时候，通常会面临已有的惯性思维。你给自己各种借口待在房子里，重复自己昨天甚至前天同样的事情。你告诉自己
+学习新东西太麻烦了，或者你根本就不喜欢轮滑，那么还为什么要熬夜到很晚，甚至失去自己呼呼大睡的机会呢？这种消极的心理暗示总是非常具有
+说服力，你会认为你年纪太大没必要再去学习骑骆驼，或者如果你已经在博物馆工作那么你可能接下来的一辈子都会留在这里。</p>
+<p>从事新活动是你可以学习的行为。给自己创造一些新体验。如果有朋友愿意和你一起，这将是非常有帮助的。刚开始你可能会觉得不舒服但是一定
+要坚持下去。直到在这个水平内你感到习惯然后再继续往下走。把你想做的事情列一个清单，保证一周一次并坚持四个月。有时你会厌烦这很正常，
+所以一定要坚持下去。培养兴趣和保持活力是非常值得做的事情。</p>
+<blockquote class="blockquote-center"><p>译者：小太阳123<br>作者：KARYN HALL,PHD</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://7xktwz.com1.z0.glb.clouddn.com/smile.jpg&quot; alt=&quot;smile&quot;&gt;
+&lt;br&gt;
+当你有着强烈的情绪时，可能是因为你要明哲保身。你不愿冒险因为你害怕被拒绝、害怕失败、害怕自己hold不住。真的，试想下如果你彻底的失败了，
+甚至在完全陌生的人面前流泪你会怎么做？也许你不相信你会采取合理的风险。也许你曾经打破常规去挑战自我的极限，但是结果却并不令你满意。
+但卖掉你所有的财产，搬去墨西哥并非我今天所谈论的改变类型。
+    
+    </summary>
+    
+    
+      <category term="life" scheme="http://www.freereaper.com/tags/life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>compress and downscaler</title>
+    <link href="http://www.freereaper.com/blog/2016-10-26-compress.html"/>
+    <id>http://www.freereaper.com/blog/2016-10-26-compress.html</id>
+    <published>2016-10-26T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Compress"><a href="#Compress" class="headerlink" title="Compress"></a>Compress</h1><ol>
+<li><p>有损压缩(lossy)</p>
+<blockquote>
+<p>压缩的时候如果不能压到fail boundary以内，则强制压缩，保证burst length在fail boundary以内。</p>
+</blockquote>
+</li>
+<li><p>无损压缩(lossless)</p>
+<blockquote>
+<p>压缩的时候如果能压到fail boundary以内，则压缩，否则仍然以2048的burst length输出。</p>
+</blockquote>
+</li>
+</ol>
+<p>只有<code>ARGB888</code>和<code>NV12</code>才会支持lossy，其余的format即使lossy打开，也是输出lossless的，即除了<code>ARGB888</code>和
+<code>NV12</code>外，其余的format，lossy和lossless是相同的。</p>
+ <a id="more"></a>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">data</th>
+<th style="text-align:center">format</th>
+<th style="text-align:center">compress type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">uyvyd.bin</td>
+<td style="text-align:center">YCRYCB422_16BIT</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:center">yuyvd.bin</td>
+<td style="text-align:center">CRYCBY422_16BIT</td>
+<td style="text-align:center">10</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>compress test:
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cmode -m -x 640 480 -nd -ps 41 21 -st 190 50 -ws 200 200 -a 8000 -pse 300 300 -ste 2510 100 -wse 200 150 -ae 8000 -f 2 -fe 2 -cp 2048 -t 2</div></pre></td></tr></table></figure></p>
+<hr>
+<p>compress scaler test:
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cmode -scl 0 -p 42 22 -o 190 50 -s 100 100 -w 191 200 -pe 300 300 -oe 250 100 -se 101 91 -we 200 150 -t 2</div></pre></td></tr></table></figure></p>
+<h1 id="DownScaler"><a href="#DownScaler" class="headerlink" title="DownScaler"></a>DownScaler</h1><p>DIU downscaler register group:
+<code>mm327c</code>: </p>
+<blockquote>
+<p>Bit[21] — DST_FORMAT(output data format), control the output of downscaler csc.</p>
+</blockquote>
+<p><code>mm3280</code>:</p>
+<blockquote>
+<p>Bit[7-8] — SCALING_MODE（downscaler work mode)</p>
+</blockquote>
+<p><code>mm3278</code>:</p>
+<blockquote>
+<p>Bit[5-31] — BASE_ADDR</p>
+</blockquote>
+<p><code>mm8264</code>:  down scaling write back control register</p>
+<blockquote>
+<p>Bit[1-3] — csc data in format
+Bit[4-6] — csc data output format</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Compress&quot;&gt;&lt;a href=&quot;#Compress&quot; class=&quot;headerlink&quot; title=&quot;Compress&quot;&gt;&lt;/a&gt;Compress&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;有损压缩(lossy)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;压缩的时候如果不能压到fail boundary以内，则强制压缩，保证burst length在fail boundary以内。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;无损压缩(lossless)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;压缩的时候如果能压到fail boundary以内，则压缩，否则仍然以2048的burst length输出。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;只有&lt;code&gt;ARGB888&lt;/code&gt;和&lt;code&gt;NV12&lt;/code&gt;才会支持lossy，其余的format即使lossy打开，也是输出lossless的，即除了&lt;code&gt;ARGB888&lt;/code&gt;和
+&lt;code&gt;NV12&lt;/code&gt;外，其余的format，lossy和lossless是相同的。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="zx" scheme="http://www.freereaper.com/tags/zx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>跑步|伊始</title>
+    <link href="http://www.freereaper.com/blog/2016-10-16-running.html"/>
+    <id>http://www.freereaper.com/blog/2016-10-16-running.html</id>
+    <published>2016-10-16T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<img src="http://7xktwz.com1.z0.glb.clouddn.com/runing.jpg" class="full-image" alt="runing" title="跑者">
+<p>  对于跑步，一开始内心是拒绝的，至于为什么最后又坚持跑下来了，甚至有点喜欢上
+跑步这项“枯燥”的运动，与其说是坚持，不如归之于某种不服输的心理。
+<a id="more"></a></p>
+<p>  起初是冲着减肥被逼无奈才去跑步的，从跑1km就各种天昏地暗到慢慢的可以跑个3km
+，渐渐发现自己也可以跑上个10km，变成自己曾经认为只能膜拜的一类人，这实在是一
+种很奇妙的感受。其实吧觉得跑步很锻炼一个人，倒不是说跑步有多难，难得是坚持，
+不断的突破自我，一步一个脚印，最终实现属于个人的小目标。</p>
+<p>  当想跑步了，那么就痛痛快快地穿上跑鞋，放下包袱，放空自己，无关于时间，
+无关于心情，无关于整个世界，在奔跑中与自己来一次直接对话。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;img src=&quot;http://7xktwz.com1.z0.glb.clouddn.com/runing.jpg&quot; class=&quot;full-image&quot; alt=&quot;runing&quot; title=&quot;跑者&quot;&gt;
+&lt;p&gt;  对于跑步，一开始内心是拒绝的，至于为什么最后又坚持跑下来了，甚至有点喜欢上
+跑步这项“枯燥”的运动，与其说是坚持，不如归之于某种不服输的心理。
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="http://www.freereaper.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cool git</title>
+    <link href="http://www.freereaper.com/blog/2015-08-10-cool-git.html"/>
+    <id>http://www.freereaper.com/blog/2015-08-10-cool-git.html</id>
+    <published>2015-08-10T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="/assets/BlogImg/git.png" alt="img">
+很早之前就开始使用并接触Git，这种分布式的SCM给我的<em>coding</em>带来了不少便捷.</p>
+<a id="more"></a>
+<h2 id="Git学习"><a href="#Git学习" class="headerlink" title="Git学习"></a>Git学习</h2><p>可以在线学习<a href="http://git-scm.com/book/en/v2" target="_blank" rel="external">ProGit</a>对Git有比较深入的了解。</p>
+<h2 id="Git-Tricks"><a href="#Git-Tricks" class="headerlink" title="Git Tricks"></a>Git Tricks</h2><h3 id="如何将只有两个commit历史的库合并为一个commit"><a href="#如何将只有两个commit历史的库合并为一个commit" class="headerlink" title="如何将只有两个commit历史的库合并为一个commit"></a>如何将只有两个commit历史的库合并为一个commit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reset --soft HEAD^1</div><div class="line">git commit --amend -sv</div></pre></td></tr></table></figure>
+<ul>
+<li>git reset –soft HEAD^1 可以将HEAD指向第一个commit，且
+工作区和暂存区的文件都保持不变。</li>
+<li>git commit –amend -v<ul>
+<li>–amend 新提交覆盖上一次提交</li>
+<li>-v verbose，列出跟上一提交之间的改变</li>
+</ul>
+</li>
+</ul>
+<h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><ol>
+<li><p>git diff</p>
+<blockquote>
+<p>工作区和暂存区进行比较</p>
+</blockquote>
+</li>
+<li><p>git diff –cached</p>
+<blockquote>
+<p>暂存区和HEAD比较</p>
+</blockquote>
+</li>
+<li><p>git diff HEAD</p>
+<blockquote>
+<p>工作区和HEAD比较</p>
+</blockquote>
+</li>
+<li><p>git diff master origin/branch</p>
+<blockquote>
+<p>本地master分支和远程branch分支进行比较</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h3><ol>
+<li><p><strong><em>git add -A</em></strong>   #Stage All(new, modified, deleted)files</p>
+</li>
+<li><p><strong><em>git add .</em></strong>    #Stage New and Modified files only</p>
+</li>
+<li><p><strong><em>git add -u</em></strong>   #Stage Modified and Deleted files only</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;/assets/BlogImg/git.png&quot; alt=&quot;img&quot;&gt;
+很早之前就开始使用并接触Git，这种分布式的SCM给我的&lt;em&gt;coding&lt;/em&gt;带来了不少便捷.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="git" scheme="http://www.freereaper.com/tags/git/"/>
+    
+      <category term="shell" scheme="http://www.freereaper.com/tags/shell/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++ Singleton Design Pattern</title>
+    <link href="http://www.freereaper.com/blog/2015-08-02-c++%20singleton.html"/>
+    <id>http://www.freereaper.com/blog/2015-08-02-c++ singleton.html</id>
+    <published>2015-08-02T00:00:00.000Z</published>
+    <updated>2017-09-06T07:40:07.365Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>一个类仅允许创建一个实例，这通常使用在类似于日志或者其他只有单一资源可供使用的情况。单例设计模式保证类本身提供单一实例创建的方法。</p>
+<p>使用c++实现单例模式的方法如下:  </p>
+<ol>
+<li>构造函数声明为私有;</li>
+<li>将拷贝构造函数与等号运算符声明为私有，并不提供他们的实现;</li>
+<li>在类中声明一个静态的全局访问接口;</li>
+</ol>
+<a id="more"></a>
+<h3 id="通过懒汉模式实现"><a href="#通过懒汉模式实现" class="headerlink" title="通过懒汉模式实现"></a>通过懒汉模式实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">static</span> Singleton&amp; <span class="title">Instance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">static</span> Singleton theSingleton;</div><div class="line">        <span class="keyword">return</span> theSingleton;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/* more (non-static) functions here */</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Singleton();                            <span class="comment">// ctor hidden</span></div><div class="line">    Singleton(Singleton <span class="keyword">const</span>&amp;);            <span class="comment">// copy ctor hidden</span></div><div class="line">    Singleton&amp; <span class="keyword">operator</span>=(Singleton <span class="keyword">const</span>&amp;); <span class="comment">// assign op. hidden</span></div><div class="line">    ~Singleton();                           <span class="comment">// dtor hidden</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>懒汉模式（第一次调用创建该类实例的时候才产生一个该类的实例）通过静态局部变量创建实例，并在之后都只返回此实例。这样做的好处是，程序会在退出时自动析构该实例。</p>
+<h3 id="通过饿汉模式实现"><a href="#通过饿汉模式实现" class="headerlink" title="通过饿汉模式实现"></a>通过饿汉模式实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingletonStatic</span>  </span></div><div class="line"><span class="class"> &#123;</span>  </div><div class="line"> <span class="keyword">private</span>:  </div><div class="line">     <span class="keyword">static</span> <span class="keyword">const</span> SingletonStatic* m_instance;  </div><div class="line">     SingletonStatic()&#123;&#125;  </div><div class="line"> <span class="keyword">public</span>:  </div><div class="line">     <span class="function"><span class="keyword">static</span> SingletonStatic* <span class="title">getInstance</span><span class="params">()</span>  </span></div><div class="line"><span class="function">     </span>&#123;  </div><div class="line">         <span class="keyword">return</span> m_instance;  </div><div class="line">    &#125;  </div><div class="line">&#125;;  </div><div class="line">  </div><div class="line"><span class="comment">//外部初始化 before invoke main  </span></div><div class="line"><span class="keyword">const</span> SingletonStatic* SingletonStatic::m_instance = <span class="keyword">new</span> SingletonStatic;</div></pre></td></tr></table></figure>
+<p>饿汉模式（程序一开始就产生一个该类的实例），通过这种方式实现的单例模式保证了线程安全性，但是无法自动执行析构函数，比如有关闭文件，释放外部资源等。这可以通过在程序结束时通过delete getInstance()来实现，这种方式显得过于笨重，并且容易遗忘。利用系统在程序结束后会自动析构所有的全局变量和类的静态成员变量，我们可以在单例类中定义一个这样的静态成员变量，而它的唯一目的就是在程序结束后能够析构单例类中的实例。代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;&gt;  </span></span></div><div class="line">  </div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span>  </span></div><div class="line"><span class="class">&#123;</span>  </div><div class="line">  </div><div class="line"><span class="keyword">public</span>:    </div><div class="line">    <span class="function"><span class="keyword">static</span> Singleton *<span class="title">GetInstance</span><span class="params">()</span></span>;  </div><div class="line">  </div><div class="line"><span class="keyword">private</span>:  </div><div class="line">    Singleton()  </div><div class="line">    &#123;   </div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Singleton ctor"</span> &lt;&lt; <span class="built_in">endl</span>;   </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    ~Singleton()   </div><div class="line">    &#123;  </div><div class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Singleton dtor"</span> &lt;&lt; <span class="built_in">endl</span>;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="keyword">static</span> Singleton *m_pInstance;  </div><div class="line">  </div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Garbo</span>  </span></div><div class="line"><span class="class">    &#123;</span>  </div><div class="line">  </div><div class="line">    <span class="keyword">public</span>:  </div><div class="line">        ~Garbo()   </div><div class="line">        &#123;  </div><div class="line">            <span class="keyword">if</span> (Singleton::m_pInstance)  </div><div class="line">            &#123;  </div><div class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">"Garbo dtor"</span> &lt;&lt; <span class="built_in">endl</span>;  </div><div class="line">                <span class="keyword">delete</span> Singleton::m_pInstance;    </div><div class="line">            &#125;  </div><div class="line">        &#125;</div><div class="line">    &#125;;  </div><div class="line">    <span class="keyword">static</span> Garbo garbo;  </div><div class="line">&#125;;  </div><div class="line">  </div><div class="line">Singleton::Garbo Singleton::garbo;  <span class="comment">// 一定要初始化，不然程序结束时不会析构garbo  </span></div><div class="line">Singleton *Singleton::m_pInstance = <span class="literal">NULL</span>;  </div><div class="line">  </div><div class="line">Singleton *Singleton::GetInstance()  </div><div class="line">&#123;  </div><div class="line">  </div><div class="line">    <span class="keyword">if</span> (m_pInstance == <span class="literal">NULL</span>)  </div><div class="line">        m_pInstance = <span class="keyword">new</span> Singleton;  </div><div class="line">  </div><div class="line">    <span class="keyword">return</span> m_pInstance;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序运行结束后会调用CSingleton的静态成员Garbo的析构函数，该析构函数会删除单例的唯一实例。这种方式的特点如下：  </p>
+<ul>
+<li>在单例类内部定义专有的嵌套类；</li>
+<li>在单例类内定义私有的专门用于释放的静态成员；</li>
+<li>利用程序在结束时析构全局变量的特性，选择最终的释放时机;</li>
+<li>使用单例的代码不需要任何操作，不必关心对象的释放</li>
+</ul>
+<p><strong><em>Ref</em></strong>:  <a href="http://www.yolinux.com/TUTORIALS/C++Singleton.html" target="_blank" rel="external">C++ Singleton design pattern</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; class=&quot;headerlink&quot; title=&quot;单例模式&quot;&gt;&lt;/a&gt;单例模式&lt;/h3&gt;&lt;p&gt;一个类仅允许创建一个实例，这通常使用在类似于日志或者其他只有单一资源可供使用的情况。单例设计模式保证类本身提供单一实例创建的方法。&lt;/p&gt;
+&lt;p&gt;使用c++实现单例模式的方法如下:  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;构造函数声明为私有;&lt;/li&gt;
+&lt;li&gt;将拷贝构造函数与等号运算符声明为私有，并不提供他们的实现;&lt;/li&gt;
+&lt;li&gt;在类中声明一个静态的全局访问接口;&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="c++" scheme="http://www.freereaper.com/tags/c/"/>
+    
+      <category term="design pattern" scheme="http://www.freereaper.com/tags/design-pattern/"/>
+    
+  </entry>
+  
+</feed>
