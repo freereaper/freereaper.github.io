@@ -5,12 +5,35 @@
 #+TAGS: Linux, rg
 #+CATEGORIES:
 
-[[https://github.com/BurntSushi/ripgrep][ripgrep]]比ag更快
-
- ** install proxychains-ng
-
-** install Rust
-curl https://sh.rustup.rs -sSf > x.sh
+听闻[[https://github.com/BurntSushi/ripgrep][ripgrep]]有着grep的速度以及ag的功能，这里简单
+记录下rg的安装过程。
 
 
 {{{more}}}
+
+* install proxychains-ng
+  #+BEGIN_SRC sh
+  git clone https://github.com/rofl0r/proxychains-ng.git
+  cd proxychains-ng
+  ./configure --prefix=/usr --sysconfdir=/etc/
+  make
+  sudo make install
+  #+END_SRC
+
+  add proxy in the /etc/proxychains.conf or /usr/etc/proxychains.conf
+
+  配置完成之后即可使用proxychains4完成后续的安装。
+
+
+* install Rust
+  官方安装： ~curl https://sh.rustup.rs -Ssf | sh~
+  这里要使用代理安装，所以先将安装脚本下载到本地，再通过proxychans4安装。
+  #+BEGIN_SRC sh
+    curl https://sh.rustup.rs -sSf > x.sh
+    proxychains4 ~/x.sh
+  #+END_SRC
+
+  安装完成后，所有的命令位于 ~/.cargo/bin~ 目录下，且相关的PATH已添加至~/.profile中。
+
+* install ripgrep
+  ~proxychains4 cargo install ripgrep~ ，安装成功后，rg位于~/.cargo/bin目录中。
