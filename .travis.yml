@@ -46,6 +46,7 @@ before_install:
 - curl -fsSkL https://gist.githubusercontent.com/freereaper/186da630b389d1e32b55f785febfa927/raw > emacs-pkg-install.sh
 - chmod +x ./emacs-pkg-install.sh
 - ./emacs-pkg-install.sh org-plus-contrib
+- ./emacs-pkg-install.sh emacs-htmlize
 # not use this way to install emacs
 #- wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
 #- make -f emacs-travis.mk install_emacs
